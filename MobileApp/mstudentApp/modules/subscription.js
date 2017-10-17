@@ -2,6 +2,7 @@ import {Platform} from 'react-native';
 import FCM from 'react-native-fcm';
 
 const API_KEY = 'AAAA1i1g05s:APA91bEm3cI3lCflqY74PSH3O-3RGUk4H9kGqXKB1NfhT9igNntvDSSqWDBxajEK-rsbFovPVJzTJojx4Q-SlgFs-7D2fT2dmdw_0ii_5jodpn__jahPlKE1UL-HibRkSO8_6WL88B3D';
+var icube = [];
 
 module.exports = {
     get_iCube: function(callback) {
@@ -57,6 +58,40 @@ module.exports = {
         });
         callback(mySubjects);
     },
+    getSubscriptionInfo(topic_key){
+      if(icube != []){
+          //parse topic key to get subscription IDs
+          var channel_id = topic_key.split("-")[0];
+          var area_id = topic_key.split("-")[1];
+          var subject_id = topic_key.split("-")[2];
+          var channels = icube;
+          //get subscription/icube names from IDs
+          for(var i=0; i<channels.length; ++i){
+              if(channels[i]._id === channel_id){
+                  for(var j=0; j<channels[i].areas.length; ++j){
+                      if(channels[i].areas[j].id === area_id){
+                          for(var k=0; k<channels[i].areas[j].subjects.length; ++k){
+                              if(channels[i].areas[j].subjects[k].id === subject_id){
+                                 return ({
+                                      channel: channels[i].name,
+                                      area: channels[i].areas[j].name,
+                                      subject: channels[i].areas[j].subjects[k].name
+                                  });
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      }
+      else{ //prevent error if icube is not loaded
+          return ({
+              channel: 'Channel',
+              area: 'Area',
+              subject: 'Subject'
+          });
+      }
+    },
     subscribe: function(topic_key){
         FCM.subscribeToTopic('/topics/'+topic_key);
     },
@@ -65,3 +100,5 @@ module.exports = {
         FCM.unsubscribeFromTopic('/topics/'+topic_key);
     }
 };
+
+module.exports.get_iCube((results)=>icube=results); //cache icube for getting subscription info breadcrumb

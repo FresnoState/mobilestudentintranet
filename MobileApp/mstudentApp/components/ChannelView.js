@@ -22,33 +22,35 @@ export default class ChannelView extends Component {
     constructor(props){
         super(props);
         const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-        this.channels = [{"name": "Channel News", "messages": []}]; //placeholder until data loads
         this.state = {
             index: 0,
             dataSource: ds.cloneWithRows([])
-        }
+        };
+        this.channels = [{"name": "Channel News", "messages": []}]; //placeholder until data loads
+        this.currScreen = null;
     }
 
     _initChannels() {
-        var channels = [];
         subscription.get_iCube((icube)=>{
             for(var i=0; i<icube.length; ++i){
-                //console.log(icube[i]._id)
-                channels[i] = {id: icube[i]._id, name: icube[i].name, messages: []}
+                this.channels[i] = {id: icube[i]._id, name: icube[i].name, messages: []}
             }
             message.getMessages((messages)=>{
-                for(var i=0; i<messages.length; ++i){
-                    var c_index = this._getChannelIndex(channels, messages[i].channel);
-                    //var channel_id = messages[i].topic_key.split("-")[0]; //parse topic key to get channel
-                    //var c_index = this._getChannelIndex(channels, channel_id);
-                    if(c_index != null) {
-                        channels[c_index].messages.push(messages[i]);
-                    }
-                }
-                this.channels = channels;
-                this.setState({dataSource: this.state.dataSource.cloneWithRows(channels[0].messages)})
+                this._filterMessages(messages);
+                //this._filterMessages(this.props.screenProps.messages);
+                this.setState({dataSource: this.state.dataSource.cloneWithRows(this.channels[0].messages)})
             });
         });
+    }
+
+    _filterMessages(messages){
+        for(var i=0; i<messages.length; ++i){
+            var channel_id = messages[i].topic_key.split("-")[0]; //parse topic key to get channel
+            var c_index = this._getChannelIndex(channel_id);
+            if(c_index != null) {
+                this.channels[c_index].messages.push(messages[i]);
+            }
+        }
     }
 
     componentDidMount() {
@@ -57,17 +59,15 @@ export default class ChannelView extends Component {
                 //debugging
 
                 if(notif.message) { //if data message
-                    var now = Date.now();
-                    var timestamp = Platform.OS === 'ios' ? now : notif["google.sent_time"];
                     this.addToChannels({
                         "msi_key" : notif.msi_key,
                         "topic_key" : notif.topic_key,
-                        ////remove this
-                        "channel": notif.channel,
+                        "dist" : notif.dist,
                         "title" : notif.title,
                         "desc" : notif.desc,
                         "message" : notif.message,
-                        "timestamp": timestamp
+                        "event" : notif.event,
+                        "timestamp": notif.timestamp
                     });
                 }
 
@@ -89,11 +89,23 @@ export default class ChannelView extends Component {
         );
     }
 
-    _getChannelIndex(channels, channel_id){
+    componentDidUpdate(){
+        if(this.currScreen !== this.props.screenProps.currentScreen && this.props.screenProps.currentScreen === "Channel News"){
+            message.getMessages((messages)=>{
+                for(var i=0; i<this.channels.length; i++){
+                    this.channels[i].messages = [];
+                }
+                this._filterMessages(messages);
+                this.setState({dataSource: this.state.dataSource.cloneWithRows(this.channels[this.state.index].messages)})
+            });
+        }
+        this.currScreen = this.props.screenProps.currentScreen;
+    }
+
+    _getChannelIndex(channel_id){
         var c_index = null;
-        for(var i=0; i<channels.length; ++i){
-            if(channels[i].name === channel_id){
-            //if(channels[i]._id === channel_id){
+        for(var i=0; i<this.channels.length; ++i){
+            if(this.channels[i].id === channel_id){
                 c_index = i;
                 break;
             }
@@ -102,9 +114,9 @@ export default class ChannelView extends Component {
     }
 
     addToChannels(newMessage){
-        //var channel_id = newMessage.topic_key.split("-")[0];
-        //var c_index = this._getChannelIndex(this.channels, channel_id);
-        var c_index = this._getChannelIndex(this.channels, newMessage.channel);
+        var channel_id = newMessage.topic_key.split("-")[0];
+        var c_index = this._getChannelIndex(channel_id);
+        //var c_index = this._getChannelIndex(newMessage.channel);
         if(c_index != null){
             this.channels[c_index].messages.unshift(newMessage);
             if(c_index === this.state.index){
@@ -119,7 +131,7 @@ export default class ChannelView extends Component {
         this.setState({dataSource: this.state.dataSource.cloneWithRows(this.channels[this.state.index].messages)});
     }
 
-    removeMessage(rowID, msi_key){
+    removeMessage(msi_key, rowID){
         message.removeMessage(msi_key);
         var messages = this.state.dataSource._dataBlob.s1;
         delete messages[rowID];
@@ -147,12 +159,12 @@ export default class ChannelView extends Component {
     render() {
         return (
             <View style={styles.noncentered_container}>
-                <View style={{marginTop: 20, alignItems: 'center', justifyContent: 'center', flexDirection: 'row'}}>
+                <View style={{marginTop: 10, alignItems: 'center', justifyContent: 'center', flexDirection: 'row'}}>
                     <TouchableOpacity onPress={()=>this.goLeft()}><Icon name='ios-arrow-dropleft'/></TouchableOpacity>
                     <Text style={styles.headerText}>{this.channels[this.state.index].name}</Text>
                     <TouchableOpacity onPress={()=>this.goRight()}><Icon name='ios-arrow-dropright'/></TouchableOpacity>
                 </View>
-                <MessageQueue messageDS={this.state.dataSource} removeMessage={this.removeMessage}/>
+                <MessageQueue messageDS={this.state.dataSource} removeMessage={this.removeMessage.bind(this)}/>
             </View>
         );
     }

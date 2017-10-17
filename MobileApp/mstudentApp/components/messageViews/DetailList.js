@@ -4,9 +4,9 @@ import {
     View,
     ListView
 } from 'react-native';
-import DetailItem from './Detail_Item';
+import ContainerItem from './ContainerItem';
 
-export default class DetailList extends Component {
+export default class ContainerList extends Component {
     constructor(props){
         super(props);
     }
@@ -16,7 +16,7 @@ export default class DetailList extends Component {
             <View style={{flex: 1}}>
                 <ListView
                     dataSource={this.props.messageDS}
-                    renderRow={(rowData, sectionID, rowID)=>(<DetailItem messageData={rowData} rowID={rowID} removeMessage={this.props.removeMessage.bind(this)}/>)}
+                    renderRow={(rowData, sectionID, rowID)=>(<ContainerItem messageData={rowData} rowID={rowID} removeMessage={this.props.removeMessage.bind(this)}/>)}
                 />
             </View>
         )

@@ -1,50 +1,36 @@
 import React, { Component } from 'react';
 import {NativeModules, AsyncStorage} from 'react-native';
-import {TabNavigator, TabBarBottom} from 'react-navigation';
-import styles from './styles.js';
-import Home from './components/Home.js';
-import SubsNav from './components/subsViews/SubsNav';
-import ChannelView from './components/ChannelView';
-import Search from './components/Search';
-import SettingsNav from './components/settingsViews/SettingsNav';
+import {StackNavigator} from 'react-navigation';
+import styles from './styles';
+import TabNav from './TabNav';
 
 import init from './modules/init';
 import listener from './modules/listener';
+import message from './modules/message';
+import subscriptions from './modules/subscription';
 
 
 console.disableYellowBox = true;
 NativeModules.ExceptionsManager = null;
 
-const AppNavigator = TabNavigator(
+
+const AppNavigator = StackNavigator(
     {
-        'Home': {
-            screen: Home
-        },
-        'Channel News' : {
-            screen: ChannelView
-        },
-        'Subscriptions' : {
-            screen: SubsNav
-        },
-        'Search' : {
-            screen: Search
-        },
-        'Settings' : {
-            screen: SettingsNav
+        'AppTabs': {
+            screen: TabNav
         }
     },
     {
-        tabBarComponent: ({...props }) => (
-            <TabBarBottom
-                {...props}
-            />
-        ),
-        tabBarPosition: 'bottom',
-        animationEnabled: true,
+        initialRouteName: 'AppTabs'
     }
 );
 
 export default class mstudentApp extends Component {
+    constructor(){
+        super();
+        this.state = {messages: []}
+    }
+
     componentDidMount(){
         AsyncStorage.getItem('initialized', (err, result) => {
             if(!result){
@@ -54,6 +40,8 @@ export default class mstudentApp extends Component {
     }
 
     render() {
+        //const stateClone = Object.assign({}, this.state);
+        // <AppNavigator screenProps={stateClone} />
         return (
             <AppNavigator />
         );

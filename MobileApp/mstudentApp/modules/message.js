@@ -1,8 +1,8 @@
 import db from './db.js';
 
 module.exports = {
-  addMessage: function(msi_key, topic_key, channel, title, description, message, timestamp){
-      db.executeSql('INSERT INTO Message (msi_key, topic_key, channel, title, desc, message, timestamp) VALUES (?, ?,?,?,?,?,?);', [msi_key, topic_key, channel, title, description, message, timestamp]);
+  addMessage: function(msi_key, topic_key, dist, title, description, message, event, timestamp){
+      db.executeSql('INSERT INTO Message (msi_key, topic_key, dist, title, desc, message, event, timestamp) VALUES (?, ?,?,?,?,?,?,?);', [msi_key, topic_key, dist, title, description, message, event, timestamp]);
   },
   getMessages: function(callback){
       var messages = [];

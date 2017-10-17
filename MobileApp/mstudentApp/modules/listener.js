@@ -3,7 +3,6 @@ import message from "./message.js";
 import {Platform} from 'react-native';
 
 function listen(){
-
     this.notificationListener = FCM.on(FCMEvent.Notification, async (notif) => {
             //debugging
             console.log(notif);
@@ -21,9 +20,7 @@ function listen(){
             if(notif.message) { //if data message
                 //message.exists(notif.msi_key, (exists)=>{ //if not duplicate
                 //if(!exists){
-                var now = Date.now();
-                var timestamp = Platform.OS === 'ios' ? now : notif["google.sent_time"];
-                message.addMessage(notif.msi_key, notif.topic_key, notif.channel, notif.title, notif.desc, notif.message, timestamp);
+                message.addMessage(notif.msi_key, notif.topic_key, notif.dist, notif.title, notif.desc, notif.message, notif.event, notif.timestamp);
                 //}
                 //});
             }

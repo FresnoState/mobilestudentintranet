@@ -5,10 +5,11 @@ db.executeSql(
         ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
         msi_key VARCHAR(100),
         topic_key VARCHAR (100),
-        channel VARCHAR (100),
+        dist VARCHAR (50),
         title VARCHAR(500),
         desc VARCHAR(500),
         message VARCHAR(1500),
+        event VARCHAR(1000),
         timestamp INTEGER
     );`
 );

@@ -20,10 +20,14 @@ export default class Home extends Component {
     constructor(props){
         super(props);
         const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-        this.state = {dataSource: ds.cloneWithRows([])};
+        this.state = {
+            dataSource: ds.cloneWithRows([])
+        };
+        this.currScreen = null;
     }
 
     componentDidMount() {
+        //console.log("HOME", this.props.screenProps);
         message.getMessages((messages)=>{
             this.setState({dataSource: this.state.dataSource.cloneWithRows(messages)});
         });
@@ -36,9 +40,11 @@ export default class Home extends Component {
                        this.addToQueue({
                                "msi_key" : notif.msi_key,
                                "topic_key" : notif.topic_key,
+                               "dist" : notif.dist,
                                "title" : notif.title,
                                "desc" : notif.desc,
                                "message" : notif.message,
+                               "event" : notif.event,
                                "timestamp": timestamp
                            });
                        //}
@@ -63,6 +69,15 @@ export default class Home extends Component {
         );
     }
 
+    componentDidUpdate(){
+        if(this.currScreen !== this.props.screenProps.currentScreen && this.props.screenProps.currentScreen === "Home"){
+            message.getMessages((messages)=>{
+                this.setState({dataSource: this.state.dataSource.cloneWithRows(messages)});
+            });
+        }
+        this.currScreen = this.props.screenProps.currentScreen;
+    }
+
     addToQueue(newMessage){
         var messages = this.state.dataSource._dataBlob.s1.slice(); //slice list for re-render
         messages.unshift(newMessage); //add most recent message to top of the list
@@ -77,9 +92,10 @@ export default class Home extends Component {
     }
 
     render() {
+        //console.log("HOME", this.props.screenProps);
         return (
             <View style={styles.noncentered_container}>
-                <View style={{marginTop: 20, alignItems: 'center'}}>
+                <View style={{marginTop: 10, alignItems: 'center'}}>
                     <Text style={styles.headerText}>Messages</Text>
                 </View>
                 <MessageQueue messageDS={this.state.dataSource} removeMessage={this.removeMessage.bind(this)}/>

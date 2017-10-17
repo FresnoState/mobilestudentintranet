@@ -7,8 +7,9 @@ import {
 import {Card} from 'native-base';
 import DetailItem from './Detail_Item';
 import OverviewItem from './OverviewItem';
+import Footer from './Footer';
 
-export default class DetailCard extends Component {
+export default class ToggableItem extends Component {
     constructor(props){
         super(props);
         this.state = {toggled: false}
@@ -26,13 +27,16 @@ export default class DetailCard extends Component {
                 <OverviewItem {...this.props}/>
             );
         return(
-            <View style={{borderWidth: 1, borderColor: '#c2c4c6'}}>
-                <TouchableOpacity style={{margin: 5, alignItems: 'flex-end'}} onPress={this.toggleItem.bind(this)}>
-                    <Text style={styles.defaultText}>
-                        {!this.state.toggled ? "More" : "Less"}
-                    </Text>
-                </TouchableOpacity>
-                {item}
+            <View>
+                <Card style={{margin: 10, padding: 10}}>
+                    <TouchableOpacity style={{margin: 5, alignItems: 'flex-end'}} onPress={this.toggleItem.bind(this)}>
+                        <Text style={styles.defaultText}>
+                            {!this.state.toggled ? "More" : "Less"}
+                        </Text>
+                    </TouchableOpacity>
+                    {item}
+                    <Footer {...this.props}/>
+                </Card>
             </View>
         )
     }
