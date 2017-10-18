@@ -29,10 +29,6 @@ function init(){
             });
     }
     else {
-        /*FCM.subscribeToTopic('/topics/test_1');
-        FCM.subscribeToTopic('/topics/test_2');
-        FCM.subscribeToTopic('/topics/test_4');
-        FCM.subscribeToTopic('/topics/cYAyJbE9W4tkHXlNghPj4Wi3QZb4DZC6');*/
         initSubs();
         AsyncStorage.setItem('initialized', 'true');
     }

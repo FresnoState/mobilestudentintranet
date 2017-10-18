@@ -6,18 +6,26 @@ var icube = [];
 
 module.exports = {
     get_iCube: function(callback) {
-        process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
-        //var url = Platform.OS === 'ios' ? 'https://mobile-api.innovate.fresnostate.edu/icube' : 'http://mobile-api.innovate.fresnostate.edu/icube';
-        //var url = 'https://mobile-api.innovate.fresnostate.edu/icube';
-        var url = 'http://mobile-api.innovate.fresnostate.edu/icube';
-        fetch(url)
-        .then(function(response){
-            return response.json();
-        }).then(function(json){
-            callback(json.icube);
-        }).catch(function(err){
-            console.log("GET TOPICS", err);
-        });
+        console.log("GET ICUBE");
+        if(icube.length === 0) {
+            process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+            //var url = Platform.OS === 'ios' ? 'https://mobile-api.innovate.fresnostate.edu/icube' : 'http://mobile-api.innovate.fresnostate.edu/icube';
+            //var url = 'https://mobile-api.innovate.fresnostate.edu/icube';
+            var url = 'http://mobile-api.innovate.fresnostate.edu/icube';
+            fetch(url)
+            .then(function (response) {
+                return response.json();
+            }).then(function (json) {
+                icube = json.icube;
+                callback(icube);
+            }).catch(function (err) {
+                console.log("GET TOPICS ERR", err);
+            });
+        }
+        else{
+            console.log('cached');
+            callback(icube);
+        }
 
     },
     getSubscribed: function(callback){
@@ -38,7 +46,7 @@ module.exports = {
                     callback([]);
                 }
             }).catch(function(err){
-                console.log("GET SUBS", err);
+                console.log("GET SUBS ERR", err);
             });
         });
     },
@@ -58,13 +66,13 @@ module.exports = {
         });
         callback(mySubjects);
     },
-    getSubscriptionInfo(topic_key){
-      if(icube != []){
+    getSubscriptionInfo(topic_key, callback){
+      this.get_iCube((channels)=>{
+          let found = false;
           //parse topic key to get subscription IDs
           var channel_id = topic_key.split("-")[0];
           var area_id = topic_key.split("-")[1];
           var subject_id = topic_key.split("-")[2];
-          var channels = icube;
           //get subscription/icube names from IDs
           for(var i=0; i<channels.length; ++i){
               if(channels[i]._id === channel_id){
@@ -72,7 +80,8 @@ module.exports = {
                       if(channels[i].areas[j].id === area_id){
                           for(var k=0; k<channels[i].areas[j].subjects.length; ++k){
                               if(channels[i].areas[j].subjects[k].id === subject_id){
-                                 return ({
+                                 found = true;
+                                 callback({
                                       channel: channels[i].name,
                                       area: channels[i].areas[j].name,
                                       subject: channels[i].areas[j].subjects[k].name
@@ -83,14 +92,15 @@ module.exports = {
                   }
               }
           }
-      }
-      else{ //prevent error if icube is not loaded
-          return ({
-              channel: 'Channel',
-              area: 'Area',
-              subject: 'Subject'
-          });
-      }
+          //prevent error if icube is not loaded or match not found
+          if(!found){
+              callback({
+                  channel: 'Channel',
+                  area: 'Area',
+                  subject: 'Subject'
+              });
+          }
+      });
     },
     subscribe: function(topic_key){
         FCM.subscribeToTopic('/topics/'+topic_key);
@@ -101,4 +111,4 @@ module.exports = {
     }
 };
 
-module.exports.get_iCube((results)=>icube=results); //cache icube for getting subscription info breadcrumb
+//module.exports.get_iCube((results)=>icube=results); //cache icube for getting subscription info breadcrumb

@@ -9,7 +9,6 @@ db.executeSql(
         title VARCHAR(500),
         desc VARCHAR(500),
         message VARCHAR(1500),
-        event VARCHAR(1000),
         timestamp INTEGER
     );`
 );

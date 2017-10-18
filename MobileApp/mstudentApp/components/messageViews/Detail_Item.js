@@ -18,7 +18,9 @@ export default class DetailItem extends Component {
     }
 
     componentDidMount(){
-        this.setState({subInfo: subscription.getSubscriptionInfo(this.props.messageData.topic_key)});
+        subscription.getSubscriptionInfo(this.props.messageData.topic_key, (subInfo)=>{
+            this.setState({subInfo: subInfo});
+        });
     }
 
     render(){

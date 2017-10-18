@@ -18,11 +18,6 @@ export default class ToggableItem extends Component {
                     {this.props.messageData.dist === "Alert" && <Icon name='ios-notifications'/> }
                 </View>
                 <View style={{alignItems: 'center', flex: 1}}>
-                    <TouchableOpacity>
-                        {this.props.messageData.event !== "" && <Icon name='ios-calendar'/>}
-                    </TouchableOpacity>
-                </View>
-                <View style={{alignItems: 'center', flex: 1}}>
                     <TouchableOpacity onPress={()=>this.props.removeMessage(this.props.messageData.msi_key, this.props.rowID)}>
                         <Icon name='ios-trash'/>
                     </TouchableOpacity>
