@@ -6,7 +6,6 @@ var icube = [];
 
 module.exports = {
     get_iCube: function(callback) {
-        console.log("GET ICUBE");
         if(icube.length === 0) {
             process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
             //var url = Platform.OS === 'ios' ? 'https://mobile-api.innovate.fresnostate.edu/icube' : 'http://mobile-api.innovate.fresnostate.edu/icube';
@@ -23,7 +22,6 @@ module.exports = {
             });
         }
         else{
-            console.log('cached');
             callback(icube);
         }
 
@@ -84,7 +82,8 @@ module.exports = {
                                  callback({
                                       channel: channels[i].name,
                                       area: channels[i].areas[j].name,
-                                      subject: channels[i].areas[j].subjects[k].name
+                                      subject: channels[i].areas[j].subjects[k].name,
+                                      level: channels[i].areas[j].subjects[k].opt.level
                                   });
                               }
                           }

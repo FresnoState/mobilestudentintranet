@@ -160,9 +160,9 @@ export default class ChannelView extends Component {
         return (
             <View style={styles.noncentered_container}>
                 <View style={{marginTop: 10, alignItems: 'center', justifyContent: 'center', flexDirection: 'row'}}>
-                    <TouchableOpacity onPress={()=>this.goLeft()}><Icon name='ios-arrow-dropleft'/></TouchableOpacity>
+                    <TouchableOpacity style={{margin: 15}} onPress={()=>this.goLeft()}><Icon name='ios-arrow-dropleft'/></TouchableOpacity>
                     <Text style={styles.headerText}>{this.channels[this.state.index].name}</Text>
-                    <TouchableOpacity onPress={()=>this.goRight()}><Icon name='ios-arrow-dropright'/></TouchableOpacity>
+                    <TouchableOpacity style={{margin: 15}} onPress={()=>this.goRight()}><Icon name='ios-arrow-dropright'/></TouchableOpacity>
                 </View>
                 <MessageQueue messageDS={this.state.dataSource} removeMessage={this.removeMessage.bind(this)}/>
             </View>

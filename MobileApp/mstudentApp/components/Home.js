@@ -3,7 +3,6 @@ import {
     Text,
     View,
     ListView,
-    TouchableOpacity,
     Platform
 } from 'react-native';
 import {Icon} from 'native-base';
@@ -21,7 +20,8 @@ export default class Home extends Component {
         super(props);
         const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.state = {
-            dataSource: ds.cloneWithRows([])
+            dataSource: ds.cloneWithRows([]),
+            selectedIndex: 0
         };
         this.currScreen = null;
     }
@@ -35,18 +35,16 @@ export default class Home extends Component {
         this.notificationListener = FCM.on(FCMEvent.Notification, async (notif) => {
                 if(notif.message) { //if data message
                     //message.exists(notif.msi_key, (exists)=>{ //if not duplicate
-                       var now = Date.now();
-                       var timestamp = Platform.OS === 'ios' ? now : notif["google.sent_time"];
-                       this.addToQueue({
+                           this.addToQueue({
                                "msi_key" : notif.msi_key,
                                "topic_key" : notif.topic_key,
                                "dist" : notif.dist,
                                "title" : notif.title,
                                "desc" : notif.desc,
                                "message" : notif.message,
-                               "event" : notif.event,
-                               "timestamp": timestamp
+                               "timestamp": Number(notif.timestamp)
                            });
+                           console.log(new Date(notif.timestamp).toLocaleString())
                        //}
                     //});
                 }
@@ -91,6 +89,11 @@ export default class Home extends Component {
         this.setState({dataSource: this.state.dataSource.cloneWithRows(messages)});
     }
 
+    onVisibleRowChange(visibleRows, changedRows){
+        console.log('onVisibleRowChange')
+        console.log(visibleRows, changedRows);
+    }
+
     render() {
         //console.log("HOME", this.props.screenProps);
         return (
@@ -98,7 +101,11 @@ export default class Home extends Component {
                 <View style={{marginTop: 10, alignItems: 'center'}}>
                     <Text style={styles.headerText}>Messages</Text>
                 </View>
-                <MessageQueue messageDS={this.state.dataSource} removeMessage={this.removeMessage.bind(this)}/>
+                <MessageQueue
+                    messageDS={this.state.dataSource}
+                    removeMessage={this.removeMessage.bind(this)}
+                    onVisibleRowChange={this.onVisibleRowChange.bind(this)}
+                />
             </View>
         );
     }

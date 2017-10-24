@@ -9,7 +9,7 @@ import {
 import {Icon} from 'native-base';
 import escapeStringRegexp from 'escape-string-regexp'; //for preventing a red screen error from special characters
 import SubItem from './subsViews/OverviewItem';
-import MsgItem from './messageViews/ToggableItem';
+import MessageCard from './messageViews/messageCard/MessageCard';
 import message from '../modules/message';
 import subscription from '../modules/subscription';
 const { width, height } = Dimensions.get('window');
@@ -92,7 +92,7 @@ export default class Search extends Component {
             return <SubItem subjectData={rowData}/>;
         }
         else if(sectionID === "Messages"){
-            return <MsgItem messageData={rowData} rowID={rowID} removeMessage={this.removeMessage.bind(this)}/>;
+            return <MessageCard expanded={false} messageData={rowData} rowID={rowID} removeMessage={this.removeMessage.bind(this)}/>;
         }
         else{
             return null;
