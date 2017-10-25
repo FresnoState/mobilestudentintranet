@@ -5,6 +5,7 @@ const API_KEY = 'AAAA1i1g05s:APA91bEm3cI3lCflqY74PSH3O-3RGUk4H9kGqXKB1NfhT9igNnt
 var icube = [];
 
 module.exports = {
+    //gets subscription data
     get_iCube: function(callback) {
         if(icube.length === 0) {
             process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
@@ -26,6 +27,7 @@ module.exports = {
         }
 
     },
+    //gets array of topic keys of currently subscribed subjects
     getSubscribed: function(callback){
         FCM.getFCMToken().then((token) => {
             fetch('https://iid.googleapis.com/iid/info/'+token+'?details=true', {
@@ -48,12 +50,14 @@ module.exports = {
             });
         });
     },
+    //updates subject data to have a boolean field for whether a subject is currently subscribed to
     mergeSubData: function(subjects, subscribed, callback){
         subjects.forEach(function (subject) {
             subject["subscribed"] = subscribed.indexOf(subject.topic_key) >=0;
         });
         callback(subjects);
     },
+    //takes subject data and returns only those currently subscribed to
     mergeMySubData: function(subjects, subscribed, callback){
         var mySubjects = [];
         subjects.forEach(function (subject) {
@@ -64,9 +68,29 @@ module.exports = {
         });
         callback(mySubjects);
     },
+    //returns boolean in cb for whether a subject is currently subscribed to
+    checkIfSubscribed(topic_key, callback){
+      this.getSubscribed((subjects)=>{
+          var subscribed = false;
+          for(var i=0; i<subjects.length; ++i){
+              if(subjects[i].indexOf(topic_key) >=0){
+                  subscribed = true;
+                  break;
+              }
+          }
+          callback(subscribed);
+      })
+    },
+    //gets subscription info for a single subject by looking up the topic_key
     getSubscriptionInfo(topic_key, callback){
       this.get_iCube((channels)=>{
           let found = false;
+          var subInfo = {
+              channel: 'Channel',
+              area: 'Area',
+              subject: 'Subject',
+              subscribed: false
+          };
           //parse topic key to get subscription IDs
           var channel_id = topic_key.split("-")[0];
           var area_id = topic_key.split("-")[1];
@@ -79,25 +103,25 @@ module.exports = {
                           for(var k=0; k<channels[i].areas[j].subjects.length; ++k){
                               if(channels[i].areas[j].subjects[k].id === subject_id){
                                  found = true;
-                                 callback({
-                                      channel: channels[i].name,
-                                      area: channels[i].areas[j].name,
-                                      subject: channels[i].areas[j].subjects[k].name,
-                                      level: channels[i].areas[j].subjects[k].opt.level
-                                  });
+                                 subInfo.channel = channels[i].name;
+                                 subInfo.area = channels[i].areas[j].name;
+                                 subInfo.subject = channels[i].areas[j].subjects[k].name;
+                                 subInfo.level = channels[i].areas[j].subjects[k].opt.level;
+                                 break;
                               }
                           }
                       }
                   }
               }
           }
-          //prevent error if icube is not loaded or match not found
-          if(!found){
-              callback({
-                  channel: 'Channel',
-                  area: 'Area',
-                  subject: 'Subject'
+          if(found){
+              this.checkIfSubscribed(topic_key, (subscribed)=> {
+                  subInfo.subscribed = subscribed;
+                  callback(subInfo);
               });
+          }
+          else{
+              callback(subInfo);
           }
       });
     },
@@ -109,5 +133,3 @@ module.exports = {
         FCM.unsubscribeFromTopic('/topics/'+topic_key);
     }
 };
-
-//module.exports.get_iCube((results)=>icube=results); //cache icube for getting subscription info breadcrumb

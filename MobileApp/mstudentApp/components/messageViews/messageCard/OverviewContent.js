@@ -10,13 +10,27 @@ export default class OverviewContent extends Component {
         super(props);
     }
 
+    getFormattedMessage(){var message = this.props.messageData.message;
+        var text = message.split('---');
+
+        return (
+            <Text>
+                <Text>{text[0]}</Text>
+                <Text style={{color: 'blue'}}>{text[1]}</Text>
+                <Text>{text[2]}</Text>
+            </Text>
+        )
+
+    }
+
     render(){
+        var txt = this.getFormattedMessage();
         return(
             <View>
-                <Text style={styles.messageText} numberOfLines={2}>{this.props.messageData.message}</Text>
-                    <TouchableOpacity style={{alignItems: 'flex-end'}} onPress={this.props.toggleItem}>
-                        <Text style={styles.pressableText}>more</Text>
-                    </TouchableOpacity>
+                <Text style={styles.messageText} numberOfLines={2}>{this.getFormattedMessage()}</Text>
+                <TouchableOpacity style={{alignItems: 'flex-end'}} onPress={this.props.toggleItem}>
+                    <Text style={styles.pressableText}>more</Text>
+                </TouchableOpacity>
             </View>
         )
     }

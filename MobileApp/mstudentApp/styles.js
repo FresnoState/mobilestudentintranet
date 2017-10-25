@@ -85,7 +85,7 @@ export default styles = StyleSheet.create({
         fontWeight: '600',
         color: '#000000'
     },
-    titleAlertText: {
+    alertText: {
         fontSize: 15,
         //fontFamily: 'San Francisco',
         fontWeight: '600',
@@ -104,4 +104,35 @@ export default styles = StyleSheet.create({
     button: {
         padding: scale(5),
     },
+    leftSegmentTab: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderBottomLeftRadius: 5,
+        borderBottomRightRadius: 0,
+        borderTopLeftRadius: 5,
+        borderTopRightRadius: 0,
+        overflow: 'hidden',
+        borderWidth: 1,
+        borderColor: '#0076FF',
+        backgroundColor: '#0076FF',
+        padding: 10
+    },
+    rightSegmentTab: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderBottomLeftRadius: 0,
+        borderBottomRightRadius: 5,
+        borderTopLeftRadius: 0,
+        borderTopRightRadius: 5,
+        overflow: 'hidden',
+        borderWidth: 1,
+        borderColor: '#0076FF',
+        backgroundColor: '#FFFFFF',
+        padding: 10
+    },
+    segmentText: {
+        fontSize: 13
+    }
 });

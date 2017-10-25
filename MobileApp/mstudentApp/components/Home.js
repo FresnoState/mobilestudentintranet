@@ -9,6 +9,7 @@ import {Icon} from 'native-base';
 import FCM, {FCMEvent, RemoteNotificationResult, WillPresentNotificationResult, NotificationType} from 'react-native-fcm';
 import message from '../modules/message.js';
 import MessageQueue from './messageViews/MessageQueue';
+const dateOptions = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
 
 export default class Home extends Component {
     static navigationOptions = {
@@ -21,7 +22,8 @@ export default class Home extends Component {
         const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.state = {
             dataSource: ds.cloneWithRows([]),
-            selectedIndex: 0
+            date: new Date().toLocaleDateString('en-US', dateOptions),
+            day: 'Today'
         };
         this.currScreen = null;
     }
@@ -90,16 +92,37 @@ export default class Home extends Component {
     }
 
     onVisibleRowChange(visibleRows, changedRows){
-        console.log('onVisibleRowChange')
-        console.log(visibleRows, changedRows);
+        //console.log('onVisibleRowChange');
+        //console.log(visibleRows, changedRows);
+        var rowID = Object.keys(visibleRows.s1)[0];
+        var timestamp = this.state.dataSource._dataBlob.s1[rowID].timestamp;
+        var newDate = new Date(timestamp).toLocaleDateString('en-US', dateOptions);
+        if(newDate != this.state.date){
+            var today = new Date();
+            if(newDate === today.toLocaleDateString('en-US', dateOptions)){
+                var newDay = "Today";
+            }
+            else{
+                var yesterday = today;
+                yesterday.setDate(today.getDate()-1);
+                if(newDate === yesterday.toLocaleDateString('en-US', dateOptions)){
+                    var newDay = "Yesterday";
+                }
+                else{
+                    newDay = new Date(timestamp).toLocaleDateString('en-US', {weekday: 'long'})
+                }
+            }
+            this.setState({date: newDate, day: newDay})
+        }
     }
 
     render() {
         //console.log("HOME", this.props.screenProps);
         return (
             <View style={styles.noncentered_container}>
-                <View style={{marginTop: 10, alignItems: 'center'}}>
-                    <Text style={styles.headerText}>Messages</Text>
+                <View style={{marginTop: 30, alignItems: 'center'}}>
+                    <Text style={styles.subHeaderText}>{this.state.date}</Text>
+                    <Text style={styles.headerText}>{this.state.day}</Text>
                 </View>
                 <MessageQueue
                     messageDS={this.state.dataSource}

@@ -17,7 +17,8 @@ export default class MessageCard extends Component {
             subInfo: {
                 channel: 'Channel',
                 area: 'Area',
-                subject: 'Subject'
+                subject: 'Subject',
+                subscribed: false
             }
         }
     }
@@ -37,7 +38,7 @@ export default class MessageCard extends Component {
     }
 
     render(){
-        var MessageContent = this.state.expanded ? <DetailContent toggleItem={this.toggleItem.bind(this)} {...this.props} /> : <OverviewContent toggleItem={this.toggleItem.bind(this)} {...this.props} />;
+        var MessageContent = this.state.expanded ? <DetailContent toggleItem={this.toggleItem.bind(this)} subInfo={this.state.subInfo} {...this.props} /> : <OverviewContent toggleItem={this.toggleItem.bind(this)} {...this.props} />;
         return(
             <View>
                 <Card style={{margin: 8, padding: 10, borderRadius: 8}}>

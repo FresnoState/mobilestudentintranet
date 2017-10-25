@@ -23,8 +23,7 @@ export default class MessageHeader extends Component {
                 displayString += "Yesterday";
             }
             else {
-                var weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
-                displayString += weekdays[messageDateTime.getDay()];
+                displayString += messageDateTime.toLocaleDateString('en-US', {weekday: 'long'})
             }
         }
         displayString += ", ";
@@ -33,10 +32,19 @@ export default class MessageHeader extends Component {
     }
 
     render(){
-        var Title = this.props.messageData.dist === 'Alert' ? (
-                        <Text style={styles.titleAlertText}>ALERT: {this.props.messageData.title}</Text>
+        var SubInfo = this.props.messageData.dist === 'Alert' ? (
+                        <View style={{flexDirection: 'row'}}>
+                            <Text style={styles.alertText}>Alert: </Text>
+                            <Text style={styles.alertText}>{this.props.subInfo.area}</Text>
+                            <Text style={styles.alertText}>{" > "}</Text>
+                            <Text style={styles.alertText}>{this.props.subInfo.subject}</Text>
+                        </View>
                     ) : (
-                        <Text style={styles.titleText}>{this.props.messageData.title}</Text>
+                        <View style={{flexDirection: 'row'}}>
+                            <Text style={styles.infoText2}>{this.props.subInfo.area}</Text>
+                            <Text style={styles.infoText2}>{" > "}</Text>
+                            <Text style={styles.infoText2}>{this.props.subInfo.subject}</Text>
+                        </View>
                     );
         return(
             <View>
@@ -44,13 +52,9 @@ export default class MessageHeader extends Component {
                     <Text style={styles.infoText1}>{this.props.subInfo.channel}</Text>
                     <Text style={styles.infoText1}>{this.getDateTimeString(this.props.messageData.timestamp)}</Text>
                 </View>
+                {SubInfo}
                 <View style={{flexDirection: 'row'}}>
-                    <Text style={styles.infoText2}>{this.props.subInfo.area}</Text>
-                    <Text style={styles.infoText2}>{" > "}</Text>
-                    <Text style={styles.infoText2}>{this.props.subInfo.subject}</Text>
-                </View>
-                <View style={{flexDirection: 'row'}}>
-                    {Title}
+                    <Text style={styles.titleText}>{this.props.messageData.title}</Text>
                 </View>
             </View>
         )
