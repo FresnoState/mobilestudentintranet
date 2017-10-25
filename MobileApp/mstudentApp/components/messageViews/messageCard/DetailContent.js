@@ -14,14 +14,18 @@ export default class DetailContent extends Component {
         }
     }
 
-    subscribe(){
-        //subscription.subscribe(this.props.messageData.topic_key);
-        //this.setState({subscribed: true});
-    }
+    getFormattedMessage(){
+        var message = this.props.messageData.message;
+        var text = message.split('---');
 
-    unsubscribe(){
-        //subscription.unsubscribe(this.props.messageData.topic_key);
-        //this.setState({subscribed: false});
+        return (
+            <Text>
+                <Text>{text[0]}</Text>
+                <Text style={{color: '#0076FF'}}>{text[1]}</Text>
+                <Text>{text[2]}</Text>
+            </Text>
+        )
+
     }
 
     renderSubscriptionText(){
@@ -32,14 +36,14 @@ export default class DetailContent extends Component {
         }
         else if(this.state.subscribed){
             return (
-                <TouchableOpacity onPress={this.unsubscribe.bind(this)}>
+                <TouchableOpacity>
                     <Text style={styles.pressableText}>Unsubscribe ✕</Text>
                 </TouchableOpacity>
             );
         }
         else {
             return (
-                <TouchableOpacity onPress={this.subscribe.bind(this)}>
+                <TouchableOpacity>
                     <Text style={styles.pressableText}>Subscribe ✓</Text>
                 </TouchableOpacity>
             );
@@ -50,7 +54,7 @@ export default class DetailContent extends Component {
         var SubscriptionText = this.renderSubscriptionText();
         return(
             <View>
-                <Text style={styles.messageText}>{this.props.messageData.message}</Text>
+                <Text style={styles.messageText}>{this.getFormattedMessage()}</Text>
                 <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                     {SubscriptionText}
                     <TouchableOpacity onPress={this.props.toggleItem}>

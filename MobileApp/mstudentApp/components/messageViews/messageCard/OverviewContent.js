@@ -16,7 +16,7 @@ export default class OverviewContent extends Component {
         return (
             <Text>
                 <Text>{text[0]}</Text>
-                <Text style={{color: 'blue'}}>{text[1]}</Text>
+                <Text style={{color: '#0076FF'}}>{text[1]}</Text>
                 <Text>{text[2]}</Text>
             </Text>
         )
