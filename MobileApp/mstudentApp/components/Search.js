@@ -16,7 +16,6 @@ const { width, height } = Dimensions.get('window');
 
 export default class Search extends Component {
     static navigationOptions = {
-        tabBarLabel: 'Search',
         tabBarIcon: <Icon name='ios-search'/>
     };
 

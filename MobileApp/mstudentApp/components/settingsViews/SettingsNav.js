@@ -20,7 +20,6 @@ const SettingsNavigator = StackNavigator(
 
 export default class SettingsNav extends Component {
     static navigationOptions = {
-        tabBarLabel: 'Settings',
         tabBarIcon: <Icon name='ios-settings'/>
     };
 

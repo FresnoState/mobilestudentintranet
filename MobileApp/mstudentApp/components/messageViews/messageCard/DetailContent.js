@@ -57,9 +57,10 @@ export default class DetailContent extends Component {
                 <Text style={styles.messageText}>{this.getFormattedMessage()}</Text>
                 <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                     {SubscriptionText}
-                    <TouchableOpacity onPress={this.props.toggleItem}>
+                    {this.props.mode === 'overview' &&
+                    (<TouchableOpacity onPress={this.props.toggleItem}>
                         <Text style={styles.pressableText}>less</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity>)}
                 </View>
             </View>
         )

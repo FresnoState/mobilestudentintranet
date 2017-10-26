@@ -15,7 +15,6 @@ import MessageQueue from './messageViews/MessageQueue';
 
 export default class ChannelView extends Component {
     static navigationOptions = {
-        tabBarLabel: 'Channel News',
         tabBarIcon: <Icon name='ios-megaphone' />
     };
 
@@ -66,8 +65,7 @@ export default class ChannelView extends Component {
                         "title" : notif.title,
                         "desc" : notif.desc,
                         "message" : notif.message,
-                        "event" : notif.event,
-                        "timestamp": notif.timestamp
+                        "timestamp": Number(notif.timestamp)
                     });
                 }
 

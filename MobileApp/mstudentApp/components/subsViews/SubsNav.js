@@ -24,7 +24,6 @@ const SubNavigator = StackNavigator(
 
 export default class SubsNav extends Component {
     static navigationOptions = {
-        tabBarLabel: 'Subscriptions',
         tabBarIcon: <Icon name='ios-checkbox'/>
     };
 

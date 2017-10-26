@@ -13,7 +13,6 @@ const dateOptions = {weekday: 'long', year: 'numeric', month: 'long', day: 'nume
 
 export default class Home extends Component {
     static navigationOptions = {
-        tabBarLabel: 'Home',
         tabBarIcon: <Icon name='ios-home'/>
     };
 
@@ -46,8 +45,6 @@ export default class Home extends Component {
                                "message" : notif.message,
                                "timestamp": Number(notif.timestamp)
                            });
-                           console.log(new Date(notif.timestamp).toLocaleString())
-                       //}
                     //});
                 }
 

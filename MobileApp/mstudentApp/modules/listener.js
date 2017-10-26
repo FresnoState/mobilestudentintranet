@@ -20,7 +20,8 @@ function listen(){
             if(notif.message) { //if data message
                 //message.exists(notif.msi_key, (exists)=>{ //if not duplicate
                 //if(!exists){
-                message.addMessage(notif.msi_key, notif.topic_key, notif.dist, notif.title, notif.desc, notif.message, notif.event, notif.timestamp);
+                console.log(notif.timestamp, Number(notif.timestamp));
+                message.addMessage(notif.msi_key, notif.topic_key, notif.dist, notif.title, notif.desc, notif.message, Number(notif.timestamp));
                 //}
                 //});
             }

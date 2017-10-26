@@ -8,10 +8,10 @@ import SettingsNav from './components/settingsViews/SettingsNav';
 
 const AppTabsNavigator = TabNavigator(
     {
-        'Home': {
+        'Today': {
             screen: Home
         },
-        'Channel News' : {
+        'Channel' : {
             screen: ChannelView
         },
         'Subscriptions' : {
