@@ -10,7 +10,8 @@ export default class OverviewContent extends Component {
         super(props);
     }
 
-    getFormattedMessage(){var message = this.props.messageData.message;
+    getFormattedMessage(){
+        var message = this.props.messageData.message;
         var text = message.split('---');
 
         return (

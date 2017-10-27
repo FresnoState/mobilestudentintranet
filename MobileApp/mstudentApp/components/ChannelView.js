@@ -88,7 +88,7 @@ export default class ChannelView extends Component {
     }
 
     componentDidUpdate(){
-        if(this.currScreen !== this.props.screenProps.currentScreen && this.props.screenProps.currentScreen === "Channel News"){
+        if(this.currScreen !== this.props.screenProps.currentScreen && this.props.screenProps.currentScreen === "Channel"){
             message.getMessages((messages)=>{
                 for(var i=0; i<this.channels.length; i++){
                     this.channels[i].messages = [];

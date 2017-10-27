@@ -114,6 +114,7 @@ export default styles = StyleSheet.create({
         borderTopRightRadius: 0,
         overflow: 'hidden',
         borderWidth: 1,
+        borderRightWidth: 0,
         borderColor: '#0076FF',
         backgroundColor: '#0076FF',
         padding: 10
@@ -128,6 +129,7 @@ export default styles = StyleSheet.create({
         borderTopRightRadius: 5,
         overflow: 'hidden',
         borderWidth: 1,
+        borderLeftWidth: 0,
         borderColor: '#0076FF',
         backgroundColor: '#FFFFFF',
         padding: 10

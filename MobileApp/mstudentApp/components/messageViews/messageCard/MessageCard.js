@@ -30,10 +30,11 @@ export default class MessageCard extends Component {
     }
 
     componentWillReceiveProps(nextProps){
-        this.setState({expanded: nextProps.expanded});
-        subscription.getSubscriptionInfo(nextProps.messageData.topic_key, (subInfo)=>{
-            this.setState({subInfo: subInfo});
-        });
+        if(nextProps.messageData.msi_key !== this.props.messageData.msi_key){
+            subscription.getSubscriptionInfo(nextProps.messageData.topic_key, (subInfo)=>{
+                this.setState({subInfo: subInfo});
+            });
+        }
     }
 
     toggleItem(){
