@@ -91,7 +91,7 @@ export default class Search extends Component {
             return <SubItem subjectData={rowData}/>;
         }
         else if(sectionID === "Messages"){
-            return <MessageCard expanded={false} messageData={rowData} rowID={rowID} removeMessage={this.removeMessage.bind(this)}/>;
+            return <MessageCard expanded={false} mode={'overview'} messageData={rowData} rowID={rowID} removeMessage={this.removeMessage.bind(this)}/>;
         }
         else{
             return null;

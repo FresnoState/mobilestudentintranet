@@ -13,14 +13,20 @@ export default class OverviewContent extends Component {
     getFormattedMessage(){
         var message = this.props.messageData.message;
         var text = message.split('---');
-
-        return (
-            <Text>
-                <Text>{text[0]}</Text>
-                <Text style={{color: '#0076FF'}}>{text[1]}</Text>
-                <Text>{text[2]}</Text>
-            </Text>
-        )
+        if(text.length === 1){
+            return (
+                <Text>{message}</Text>
+            )
+        }
+        else{
+            return (
+                <Text>
+                    <Text>{text[0]}</Text>
+                    <Text style={{color: '#0076FF'}}>{text[1]}</Text>
+                    <Text>{text[2]}</Text>
+                </Text>
+            )
+        }
 
     }
 
