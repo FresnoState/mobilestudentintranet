@@ -2,11 +2,9 @@ import React, { Component } from 'react';
 import {
     Text,
     View,
-    StyleSheet,
     ListView,
     TouchableOpacity
 } from 'react-native';
-import {Button} from 'native-base';
 import MessageCard from './messageCard/MessageCard';
 
 export default class MessageQueue extends Component {
@@ -16,6 +14,15 @@ export default class MessageQueue extends Component {
             expanded: false,
             mode: 'overview'
         }
+    }
+
+    componentDidMount(){
+        //workaround for iOS loading issue
+        setTimeout(()=> {
+            this.listView.scrollTo({x: 0,  y: 50, animated: false});
+            this.listView.scrollTo({x: 0,  y: 0, animated: false});
+        }, 100)
+
     }
 
     render() {
@@ -34,6 +41,7 @@ export default class MessageQueue extends Component {
                     </View>
                 </View>
                 <ListView
+                    ref={(view) => this.listView = view}
                     key={this.state.mode}
                     dataSource={this.props.messageDS}
                     renderRow={(rowData, sectionID, rowID)=>(<MessageCard expanded={this.state.expanded} mode={this.state.mode} messageData={rowData} rowID={rowID} removeMessage={this.props.removeMessage.bind(this)}/>)}

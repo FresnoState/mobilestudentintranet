@@ -53,8 +53,9 @@ export default styles = StyleSheet.create({
         padding: 5
     },*/
     defaultText: {
-        fontSize: font_size.regular,
-        padding: scale(5)
+        //fontSize: font_size.regular,
+        fontSize: 16
+        //padding: scale(5)
     },
     subHeaderText: {
         fontSize: 13,

@@ -15,6 +15,7 @@ export default class DetailList extends Component {
         return(
             <View style={{flex: 1}}>
                 <ListView
+                    key={this.props.mode}
                     dataSource={this.props.subjectDS}
                     renderRow={(rowData)=>(<DetailItem subjectData={rowData}/>)}
                 />

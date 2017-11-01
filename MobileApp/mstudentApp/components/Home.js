@@ -89,28 +89,29 @@ export default class Home extends Component {
     }
 
     onVisibleRowChange(visibleRows, changedRows){
-        //console.log('onVisibleRowChange');
-        //console.log(visibleRows, changedRows);
-        var rowID = Object.keys(visibleRows.s1)[0];
-        var timestamp = this.state.dataSource._dataBlob.s1[rowID].timestamp;
-        var newDate = new Date(timestamp).toLocaleDateString('en-US', dateOptions);
-        if(newDate != this.state.date){
-            var today = new Date();
-            if(newDate === today.toLocaleDateString('en-US', dateOptions)){
-                var newDay = "Today";
-            }
-            else{
-                var yesterday = today;
-                yesterday.setDate(today.getDate()-1);
-                if(newDate === yesterday.toLocaleDateString('en-US', dateOptions)){
-                    var newDay = "Yesterday";
+        console.log(visibleRows, changedRows);
+            if(visibleRows.s1){
+                var rowID = Object.keys(visibleRows.s1)[0];
+                var timestamp = this.state.dataSource._dataBlob.s1[rowID].timestamp;
+                var newDate = new Date(timestamp).toLocaleDateString('en-US', dateOptions);
+                if (newDate != this.state.date) {
+                    var today = new Date();
+                    if (newDate === today.toLocaleDateString('en-US', dateOptions)) {
+                        var newDay = "Today";
+                    }
+                    else {
+                        var yesterday = today;
+                        yesterday.setDate(today.getDate() - 1);
+                        if (newDate === yesterday.toLocaleDateString('en-US', dateOptions)) {
+                            var newDay = "Yesterday";
+                        }
+                        else {
+                            newDay = new Date(timestamp).toLocaleDateString('en-US', {weekday: 'long'})
+                        }
+                    }
+                    this.setState({date: newDate, day: newDay})
                 }
-                else{
-                    newDay = new Date(timestamp).toLocaleDateString('en-US', {weekday: 'long'})
-                }
             }
-            this.setState({date: newDate, day: newDay})
-        }
     }
 
     render() {

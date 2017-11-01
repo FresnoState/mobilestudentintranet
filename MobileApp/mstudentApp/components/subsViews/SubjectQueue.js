@@ -3,12 +3,10 @@ import {
     View,
     ListView,
     Text,
-    StyleSheet
+    TouchableOpacity
 } from 'react-native';
-import {Button} from 'native-base';
 import OverviewList from './OverviewList';
 import DetailList from './DetailList';
-//import SubjectRow from './SubjectRow';
 
 export default class SubjectQueue extends Component {
 
@@ -16,26 +14,30 @@ export default class SubjectQueue extends Component {
         super(props);
         const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.state = {
-            mode: 'Overview',
+            mode: 'overview',
             dataSource: ds.cloneWithRows(this.props.navigation.state.params.subjects)
         }
     }
 
     render() {
-        let SubjectView = this.state.mode === 'Overview' ? <OverviewList subjectDS={this.state.dataSource}/> : <DetailList subjectDS={this.state.dataSource}/>;
+        let SubjectView = this.state.mode === 'overview' ? <OverviewList mode={this.state.mode} subjectDS={this.state.dataSource}/> : <DetailList mode={this.state.mode} subjectDS={this.state.dataSource}/>;
         return (
             <View style={styles.noncentered_container}>
-                <View style={{alignItems: 'center'}}>
-                    <Text style={styles.headerText}>{this.props.navigation.state.params.area}: Subjects</Text>
+                <View style={{alignItems: 'center', margin: 10}}>
+                    <Text style={[styles.headerText, {textAlign: 'center'}]}>{this.props.navigation.state.params.area}: Subjects</Text>
                 </View>
-                <View style={{flexDirection: 'row', justifyContent: 'space-around', margin: 10}}>
-                    <Button style={StyleSheet.flatten(styles.button)} info onPress={()=>this.setState({mode: 'Overview'})}><Text style={styles.defaultText}>Overview</Text></Button>
-                    <Button style={StyleSheet.flatten(styles.button)} info onPress={()=>this.setState({mode: 'Detail'})}><Text style={styles.defaultText}>Detailed</Text></Button>
+                <View style={{flexDirection: 'row', justifyContent: 'center', margin: 10}}>
+                    <View style={[styles.leftSegmentTab, {backgroundColor: this.state.mode === 'detailed' ? '#FFFFFF' : '#0076FF'}]}>
+                        <TouchableOpacity onPress={()=>this.setState({mode: 'overview'})}>
+                            <Text style={[styles.segmentText, {color: this.state.mode === 'detailed' ? '#0076FF' : '#FFFFFF'}]}>List View</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={[styles.rightSegmentTab, {backgroundColor: this.state.mode === 'detailed' ? '#0076FF' : '#FFFFFF'}]}>
+                        <TouchableOpacity onPress={()=>this.setState({mode: 'detailed'})}>
+                            <Text style={[styles.segmentText, {color: this.state.mode === 'detailed' ? '#FFFFFF' : '#0076FF'}]}>Detail View</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
-                {/*<ListView
-                    dataSource={this.state.dataSource}
-                    renderRow={(rowData)=>(<SubjectRow subject={rowData}/>)}
-                />*/}
                 {SubjectView}
             </View>
         );

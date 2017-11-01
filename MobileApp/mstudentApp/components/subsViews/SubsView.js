@@ -44,10 +44,11 @@ export default class Subscriptions extends Component {
     render() {
         return (
             <View style={styles.noncentered_container}>
-                <View style={{marginTop: 20, alignItems: 'center'}}>
+                <View style={{marginTop: 30, alignItems: 'center', margin: 10}}>
                     <Text style={styles.headerText}>Subscriptions</Text>
                 </View>
                 <ListView
+                    style={{margin: 10}}
                     dataSource={this.state.dataSource}
                     renderRow={(rowData)=>(<SubRow area={rowData.name} subjects={rowData.subjects} {...this.props}/>)}
                     renderSectionHeader={(sectionData, sectionID)=>{
