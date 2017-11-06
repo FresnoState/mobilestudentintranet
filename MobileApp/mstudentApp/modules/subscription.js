@@ -3,12 +3,13 @@ import FCM from 'react-native-fcm';
 
 const API_KEY = 'AAAA1i1g05s:APA91bEm3cI3lCflqY74PSH3O-3RGUk4H9kGqXKB1NfhT9igNntvDSSqWDBxajEK-rsbFovPVJzTJojx4Q-SlgFs-7D2fT2dmdw_0ii_5jodpn__jahPlKE1UL-HibRkSO8_6WL88B3D';
 var icube = [];
+var loaded = false;
 
 module.exports = {
     //gets subscription data
     get_iCube: function(callback) {
-        if(icube.length === 0) {
-            process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+        if(!loaded) {
+            //process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
             //var url = Platform.OS === 'ios' ? 'https://mobile-api.innovate.fresnostate.edu/icube' : 'http://mobile-api.innovate.fresnostate.edu/icube';
             //var url = 'https://mobile-api.innovate.fresnostate.edu/icube';
             var url = 'http://mobile-api.innovate.fresnostate.edu/icube';
@@ -16,6 +17,7 @@ module.exports = {
             .then(function (response) {
                 return response.json();
             }).then(function (json) {
+                loaded = true;
                 icube = json.icube;
                 callback(icube);
             }).catch(function (err) {

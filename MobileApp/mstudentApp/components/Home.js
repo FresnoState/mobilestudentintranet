@@ -67,7 +67,7 @@ export default class Home extends Component {
     }
 
     componentDidUpdate(){
-        if(this.currScreen !== this.props.screenProps.currentScreen && this.props.screenProps.currentScreen === "Home"){
+        if(this.currScreen !== this.props.screenProps.currentScreen && this.props.screenProps.currentScreen === "Today"){
             message.getMessages((messages)=>{
                 this.setState({dataSource: this.state.dataSource.cloneWithRows(messages)});
             });
@@ -89,29 +89,28 @@ export default class Home extends Component {
     }
 
     onVisibleRowChange(visibleRows, changedRows){
-        console.log(visibleRows, changedRows);
-            if(visibleRows.s1){
-                var rowID = Object.keys(visibleRows.s1)[0];
-                var timestamp = this.state.dataSource._dataBlob.s1[rowID].timestamp;
-                var newDate = new Date(timestamp).toLocaleDateString('en-US', dateOptions);
-                if (newDate != this.state.date) {
-                    var today = new Date();
-                    if (newDate === today.toLocaleDateString('en-US', dateOptions)) {
-                        var newDay = "Today";
+        if(visibleRows.s1){
+            var rowID = Object.keys(visibleRows.s1)[0];
+            var timestamp = this.state.dataSource._dataBlob.s1[rowID].timestamp;
+            var newDate = new Date(timestamp).toLocaleDateString('en-US', dateOptions);
+            if (newDate != this.state.date) {
+                var today = new Date();
+                if (newDate === today.toLocaleDateString('en-US', dateOptions)) {
+                    var newDay = "Today";
+                }
+                else {
+                    var yesterday = today;
+                    yesterday.setDate(today.getDate() - 1);
+                    if (newDate === yesterday.toLocaleDateString('en-US', dateOptions)) {
+                        var newDay = "Yesterday";
                     }
                     else {
-                        var yesterday = today;
-                        yesterday.setDate(today.getDate() - 1);
-                        if (newDate === yesterday.toLocaleDateString('en-US', dateOptions)) {
-                            var newDay = "Yesterday";
-                        }
-                        else {
-                            newDay = new Date(timestamp).toLocaleDateString('en-US', {weekday: 'long'})
-                        }
+                        newDay = new Date(timestamp).toLocaleDateString('en-US', {weekday: 'long'})
                     }
-                    this.setState({date: newDate, day: newDay})
                 }
+                this.setState({date: newDate, day: newDay})
             }
+        }
     }
 
     render() {
