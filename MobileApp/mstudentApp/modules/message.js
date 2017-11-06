@@ -20,5 +20,14 @@ module.exports = {
   },
   removeMessage: function(msi_key){
     db.executeSql('DELETE FROM Message WHERE msi_key = (?);',[msi_key]);
+  },
+  clearOldMessages: function(){ //remove messages that are older than a week from today's midnight tonight
+    var timestamp = new Date();
+    //set ts to midnight at end of current day
+    timestamp.setHours(24,0,0,0);
+    timestamp = timestamp.getTime();
+    //subtract a week from the ts
+    timestamp -= 604800000;
+    db.executeSql('DELETE FROM Message WHERE timestamp < (?);',[timestamp]);
   }
 };

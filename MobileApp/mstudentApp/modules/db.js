@@ -1,5 +1,5 @@
 var SQLite = require('react-native-sqlite-storage');
-var db = SQLite.openDatabase({name: 'MSI.db', location: 'default'}, ()=>{console.log("success")}, (err)=>{console.log(err)});
+var db = SQLite.openDatabase({name: 'MSI.db', location: 'default'});
 db.executeSql(
     `CREATE TABLE IF NOT EXISTS Message (
         ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,

@@ -11,7 +11,7 @@ import subscriptions from './modules/subscription';
 
 
 console.disableYellowBox = true;
-NativeModules.ExceptionsManager = null;
+//NativeModules.ExceptionsManager = null;
 
 
 const AppNavigator = StackNavigator(
@@ -28,7 +28,7 @@ const AppNavigator = StackNavigator(
 export default class mstudentApp extends Component {
     constructor(){
         super();
-        this.state = {messages: []}
+        message.clearOldMessages();
     }
 
     componentDidMount(){
