@@ -4,14 +4,17 @@ import {
     View,
     ListView,
     TouchableOpacity,
-    StyleSheet,
-    Platform
+    Dimensions,
+    Platform,
+    StyleSheet
 } from 'react-native';
 import {Button, Icon} from 'native-base';
 import FCM, {FCMEvent, RemoteNotificationResult, WillPresentNotificationResult, NotificationType} from 'react-native-fcm';
 import message from '../modules/message.js';
 import subscription from '../modules/subscription';
 import MessageQueue from './messageViews/MessageQueue';
+const dateOptions = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
+const { width, height } = Dimensions.get('window');
 
 export default class ChannelView extends Component {
     static navigationOptions = {
@@ -23,7 +26,8 @@ export default class ChannelView extends Component {
         const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.state = {
             index: 0,
-            dataSource: ds.cloneWithRows([])
+            dataSource: ds.cloneWithRows([]),
+            date: new Date().toLocaleDateString('en-US', dateOptions)
         };
         this.channels = [{"name": "Channel News", "messages": []}]; //placeholder until data loads
         this.currScreen = null;
@@ -155,12 +159,24 @@ export default class ChannelView extends Component {
     }
 
     render() {
+        var headerWidth = width >= 600 ? width*0.4 : width*0.75;
         return (
             <View style={styles.noncentered_container}>
-                <View style={{marginTop: 10, alignItems: 'center', justifyContent: 'center', flexDirection: 'row'}}>
-                    <TouchableOpacity style={{margin: 15}} onPress={()=>this.goLeft()}><Icon name='ios-arrow-dropleft'/></TouchableOpacity>
-                    <Text style={styles.headerText}>{this.channels[this.state.index].name}</Text>
-                    <TouchableOpacity style={{margin: 15}} onPress={()=>this.goRight()}><Icon name='ios-arrow-dropright'/></TouchableOpacity>
+                <View style={{marginTop: 30, alignSelf: 'center', alignItems: 'center', justifyContent: 'center', width: headerWidth}}>
+                    <Text style={styles.subHeaderText}>{this.state.date}</Text>
+                    <View style={{alignItems: 'center', justifyContent: 'center', flexDirection: 'row'}}>
+                        <TouchableOpacity style={{flex: 1, alignItems: 'center', justifyContent: 'center'}} onPress={()=>this.goLeft()}>
+                            <Icon style={StyleSheet.flatten(styles.headerText)} name='ios-arrow-back'/>
+                        </TouchableOpacity>
+                        <View style={{flex: 10, alignItems: 'center', justifyContent: 'center'}}>
+                            <Text style={[styles.headerText, {textAlign: 'center'}]}>
+                                {this.channels[this.state.index].name}
+                            </Text>
+                        </View>
+                        <TouchableOpacity style={{flex: 1, alignItems: 'center', justifyContent: 'center'}} onPress={()=>this.goRight()}>
+                            <Icon style={StyleSheet.flatten(styles.headerText)} name='ios-arrow-forward'/>
+                        </TouchableOpacity>
+                    </View>
                 </View>
                 <MessageQueue messageDS={this.state.dataSource} removeMessage={this.removeMessage.bind(this)}/>
             </View>

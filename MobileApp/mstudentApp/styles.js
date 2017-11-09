@@ -42,16 +42,6 @@ export default styles = StyleSheet.create({
         padding: 10,
         borderRadius: 8
     },
-    /*headerText: {
-        fontSize: font_size.large,
-        margin: 10,
-        alignItems: 'center'
-    },
-    titleText: {
-        fontSize: font_size.regular,
-        fontWeight: 'bold',
-        padding: 5
-    },*/
     defaultText: {
         //fontSize: font_size.regular,
         fontSize: 16
@@ -62,7 +52,6 @@ export default styles = StyleSheet.create({
         //fontFamily: 'San Francisco',
         fontWeight: '500',
         color: '#8A8A8F'
-
     },
     headerText: {
         fontSize: 34,
@@ -70,8 +59,14 @@ export default styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#000000'
     },
+    arrowText: {
+        fontSize: 40,
+        //fontFamily: 'San Francisco',
+        fontWeight: '900',
+        color: '#000000'
+    },
     infoText1: {
-        fontSize: 13,
+        fontSize: width >= 600 ? 14 : 13,
         //fontFamily: 'San Francisco',
         color: '#8A8A8F'
     },
@@ -118,7 +113,7 @@ export default styles = StyleSheet.create({
         borderRightWidth: 0,
         borderColor: '#0076FF',
         backgroundColor: '#0076FF',
-        padding: 10
+        padding: 5
     },
     rightSegmentTab: {
         flex: 1,
@@ -133,7 +128,7 @@ export default styles = StyleSheet.create({
         borderLeftWidth: 0,
         borderColor: '#0076FF',
         backgroundColor: '#FFFFFF',
-        padding: 10
+        padding: 5
     },
     segmentText: {
         fontSize: 13

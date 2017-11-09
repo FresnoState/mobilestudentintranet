@@ -3,9 +3,11 @@ import {
     Text,
     View,
     ListView,
-    TouchableOpacity
+    TouchableOpacity,
+    Dimensions
 } from 'react-native';
 import MessageCard from './messageCard/MessageCard';
+const { width, height } = Dimensions.get('window');
 
 export default class MessageQueue extends Component {
     constructor(props){
@@ -26,9 +28,10 @@ export default class MessageQueue extends Component {
     }
 
     render() {
+        var segmentWidth = width >= 600 ? width*0.7 : undefined;
         return (
             <View style={{flex: 1}}>
-                <View style={{flexDirection: 'row', justifyContent: 'center', margin: 10}}>
+                <View style={{flexDirection: 'row', alignSelf: 'center', justifyContent: 'center', margin: 10, width: segmentWidth}}>
                     <View style={[styles.leftSegmentTab, {backgroundColor: this.state.expanded ? '#FFFFFF' : '#0076FF'}]}>
                         <TouchableOpacity onPress={()=>this.setState({expanded: false, mode: 'overview'})}>
                             <Text style={[styles.segmentText, {color: this.state.expanded ? '#0076FF' : '#FFFFFF'}]}>List View</Text>

@@ -3,15 +3,14 @@ import {
     Text,
     View,
     TouchableOpacity,
-    Image
+    Image,
+    Dimensions
 } from 'react-native';
+const { width, height } = Dimensions.get('window');
 
 export default class DetailContent extends Component {
     constructor(props){
         super(props);
-        this.state = {
-            subscribed: this.props.subInfo.subscribed
-        };
         this.event = false;
     }
 
@@ -41,7 +40,7 @@ export default class DetailContent extends Component {
                 <Text style={styles.infoText2}>Required</Text>
             );
         }
-        else if(this.state.subscribed){
+        else if(this.props.subInfo.subscribed){
             return (
                 <TouchableOpacity>
                     <Text style={styles.pressableText}>Unsubscribe ✕</Text>
@@ -59,26 +58,29 @@ export default class DetailContent extends Component {
 
     render(){
         var SubscriptionText = this.renderSubscriptionText();
+        var subAlign = width >= 600 ? 'flex-end' : 'flex-start';
+        var subFlex = width >= 600 ? 20 : 8.5;
         return(
             <View>
                 <Text style={styles.messageText}>{this.getFormattedMessage()}</Text>
                 <View style={{flexDirection: 'row'}}>
-                    <View style={{flex: 6}}>
+                    <View style={{flex: subFlex, alignItems: subAlign}}>
                         {SubscriptionText}
                     </View>
-                    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                    <View style={{flex: 1, alignItems: 'flex-end', justifyContent: 'center'}}>
                         <Image style={{width: 15, height: 15}} source={require('../../../images/save.png')} />
                     </View>
-                    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-                        {this.event &&
-                        (<Image style={{width: 15, height: 15}} source={require('../../../images/calendar.png')} />)}
+                    <View style={{flex: 1, alignItems: 'flex-end', justifyContent: 'center'}}>
+                    {this.event &&
+                        (<Image style={{width: 15, height: 15}} source={require('../../../images/calendar.png')} />
+                    )}
                     </View>
-                    <View style={{flex: 2, alignItems: 'flex-end'}}>
-                        {this.props.mode === 'overview' &&
-                        (<TouchableOpacity onPress={this.props.toggleItem}>
+                    {this.props.mode === 'overview' &&
+                    (<View style={{flex: 1.5, alignItems: 'flex-end'}}>
+                        <TouchableOpacity onPress={this.props.toggleItem}>
                             <Text style={styles.pressableText}>less</Text>
-                        </TouchableOpacity>)}
-                    </View>
+                        </TouchableOpacity>
+                    </View>)}
                 </View>
             </View>
         )

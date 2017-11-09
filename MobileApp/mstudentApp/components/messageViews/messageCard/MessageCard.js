@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import {
     Text,
-    View
+    View,
+    Dimensions
 } from 'react-native';
 import {Card} from 'native-base';
 import MessageHeader from './MessageHeader';
 import OverviewContent from './OverviewContent';
 import DetailContent from './DetailContent';
 import subscription from '../../../modules/subscription';
+const { width, height } = Dimensions.get('window');
 
 export default class MessageCard extends Component {
     constructor(props){
@@ -43,9 +45,10 @@ export default class MessageCard extends Component {
 
     render(){
         var MessageContent = this.state.expanded ? <DetailContent toggleItem={this.toggleItem.bind(this)} subInfo={this.state.subInfo} {...this.props} /> : <OverviewContent toggleItem={this.toggleItem.bind(this)} {...this.props} />;
+        var cardWidth = width >= 600 ? width*0.85 : undefined;
         return(
-            <View>
-                <Card style={{margin: 8, padding: 10, borderRadius: 8}}>
+            <View style={{flex: 1, alignSelf: cardWidth ? 'center' : 'stretch'}}>
+                <Card style={{margin: 8, padding: 10, borderRadius: 8, width: cardWidth}}>
                     <MessageHeader subInfo={this.state.subInfo} {...this.props}/>
                     {MessageContent}
                 </Card>
