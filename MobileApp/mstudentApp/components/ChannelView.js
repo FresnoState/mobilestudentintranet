@@ -158,6 +158,31 @@ export default class ChannelView extends Component {
         }
     }
 
+    onVisibleRowChange(visibleRows, changedRows){
+        if(visibleRows.s1){
+            var rowID = Object.keys(visibleRows.s1)[0];
+            var timestamp = this.state.dataSource._dataBlob.s1[rowID].timestamp;
+            var newDate = new Date(timestamp).toLocaleDateString('en-US', dateOptions);
+            if (newDate != this.state.date) {
+                var today = new Date();
+                if (newDate === today.toLocaleDateString('en-US', dateOptions)) {
+                    var newDay = "Today";
+                }
+                else {
+                    var yesterday = today;
+                    yesterday.setDate(today.getDate() - 1);
+                    if (newDate === yesterday.toLocaleDateString('en-US', dateOptions)) {
+                        var newDay = "Yesterday";
+                    }
+                    else {
+                        newDay = new Date(timestamp).toLocaleDateString('en-US', {weekday: 'long'})
+                    }
+                }
+                this.setState({date: newDate, day: newDay})
+            }
+        }
+    }
+
     render() {
         var headerWidth = width >= 600 ? width*0.4 : width*0.75;
         return (
@@ -178,7 +203,11 @@ export default class ChannelView extends Component {
                         </TouchableOpacity>
                     </View>
                 </View>
-                <MessageQueue messageDS={this.state.dataSource} removeMessage={this.removeMessage.bind(this)}/>
+                <MessageQueue
+                    messageDS={this.state.dataSource}
+                    removeMessage={this.removeMessage.bind(this)}
+                    onVisibleRowChange={this.onVisibleRowChange.bind(this)}
+                />
             </View>
         );
     }
