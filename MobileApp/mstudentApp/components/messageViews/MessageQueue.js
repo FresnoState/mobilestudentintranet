@@ -24,7 +24,18 @@ export default class MessageQueue extends Component {
             this.listView.scrollTo({x: 0,  y: 50, animated: false});
             this.listView.scrollTo({x: 0,  y: 0, animated: false});
         }, 100)
+    }
 
+    renderRow(rowData, sectionID, rowID){
+        return (
+            <MessageCard
+                expanded={this.state.expanded}
+                mode={this.state.mode}
+                messageData={rowData}
+                rowID={rowID}
+                removeMessage={this.props.removeMessage.bind(this)}
+            />
+        )
     }
 
     render() {
@@ -47,7 +58,7 @@ export default class MessageQueue extends Component {
                     ref={(view) => this.listView = view}
                     key={this.state.mode}
                     dataSource={this.props.messageDS}
-                    renderRow={(rowData, sectionID, rowID)=>(<MessageCard expanded={this.state.expanded} mode={this.state.mode} messageData={rowData} rowID={rowID} removeMessage={this.props.removeMessage.bind(this)}/>)}
+                    renderRow={this.renderRow.bind(this)}
                     onChangeVisibleRows={this.props.onVisibleRowChange}
                 />
             </View>
