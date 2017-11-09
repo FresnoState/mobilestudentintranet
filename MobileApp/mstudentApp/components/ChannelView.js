@@ -184,14 +184,14 @@ export default class ChannelView extends Component {
     }
 
     render() {
-        var headerWidth = width >= 600 ? width*0.4 : width*0.75;
+        var headerWidth = width >= 600 ? width*0.45 : width*0.75;
         return (
             <View style={styles.noncentered_container}>
                 <View style={{marginTop: 30, alignSelf: 'center', alignItems: 'center', justifyContent: 'center', width: headerWidth}}>
                     <Text style={styles.subHeaderText}>{this.state.date}</Text>
                     <View style={{alignItems: 'center', justifyContent: 'center', flexDirection: 'row'}}>
                         <TouchableOpacity style={{flex: 1, alignItems: 'center', justifyContent: 'center'}} onPress={()=>this.goLeft()}>
-                            <Icon style={StyleSheet.flatten(styles.headerText)} name='ios-arrow-back'/>
+                            <Icon style={StyleSheet.flatten(styles.arrowText)} name='ios-arrow-back'/>
                         </TouchableOpacity>
                         <View style={{flex: 10, alignItems: 'center', justifyContent: 'center'}}>
                             <Text style={[styles.headerText, {textAlign: 'center'}]}>
@@ -199,7 +199,7 @@ export default class ChannelView extends Component {
                             </Text>
                         </View>
                         <TouchableOpacity style={{flex: 1, alignItems: 'center', justifyContent: 'center'}} onPress={()=>this.goRight()}>
-                            <Icon style={StyleSheet.flatten(styles.headerText)} name='ios-arrow-forward'/>
+                            <Icon style={StyleSheet.flatten(styles.arrowText)} name='ios-arrow-forward'/>
                         </TouchableOpacity>
                     </View>
                 </View>

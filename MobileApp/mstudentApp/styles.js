@@ -60,8 +60,7 @@ export default styles = StyleSheet.create({
         color: '#000000'
     },
     arrowText: {
-        fontSize: 40,
-        //fontFamily: 'San Francisco',
+        fontSize: 44,
         fontWeight: '900',
         color: '#000000'
     },
