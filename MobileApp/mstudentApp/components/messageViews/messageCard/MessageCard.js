@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import {
     Text,
     View,
-    Dimensions
+    Dimensions,
+    Alert
 } from 'react-native';
 import {Card} from 'native-base';
 import MessageHeader from './MessageHeader';
@@ -16,6 +17,7 @@ import Swipeable from 'react-native-swipeable';
 export default class MessageCard extends Component {
     constructor(props){
         super(props);
+        var swipeable = null;
         this.state = {
             expanded: this.props.expanded,
             subInfo: {
@@ -45,6 +47,18 @@ export default class MessageCard extends Component {
         this.setState((prevState)=>{return {expanded: !prevState.expanded}});
     }
 
+    confirmDelete(){
+        Alert.alert(
+            'Confirm Delete',
+            'Are you sure you want to delete this message?',
+            [
+                {text: 'Yes', onPress: () => this.props.removeMessage(this.props.messageData.msi_key, this.props.rowID)},
+                {text: 'No', onPress: ()=> this.swipeable.recenter()}
+            ]
+        );
+
+    }
+
     render(){
         var MessageContent = this.state.expanded ? <DetailContent toggleItem={this.toggleItem.bind(this)} subInfo={this.state.subInfo} {...this.props} /> : <OverviewContent toggleItem={this.toggleItem.bind(this)} {...this.props} />;
         var cardWidth = width >= 600 ? width*0.85 : undefined;
@@ -54,11 +68,12 @@ export default class MessageCard extends Component {
         ];
         return(
             <Swipeable
+                onRef={ref => this.swipeable = ref}
                 rightButtons={rightButtons}
                 rightActionActivationDistance={swipeDist}
                 onSwipeStart={this.props.swipeStart}
                 onSwipeRelease={this.props.swipeRelease}
-                onRightActionComplete={()=>{this.props.removeMessage(this.props.messageData.msi_key, this.props.rowID)}}
+                onRightActionComplete={this.confirmDelete.bind(this)}
             >
             <View style={{flex: 1, alignSelf: cardWidth ? 'center' : 'stretch'}}>
                 <Card style={{margin: 8, padding: 10, borderRadius: 8, width: cardWidth}}>
