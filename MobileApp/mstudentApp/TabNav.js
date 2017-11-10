@@ -32,6 +32,7 @@ const AppTabsNavigator = TabNavigator(
         ),
         tabBarPosition: 'bottom',
         animationEnabled: true,
+        swipeEnabled: false
     }
 );
 
@@ -43,7 +44,6 @@ export default class TabNav extends Component {
     state = {prevScreen: null, currentScreen: null};
 
     _onNavigationStateChange(prevState, newState, action) {
-        console.debug('onNavigationStateChange action.routeName=', action.routeName)
         this.setState({currentScreen: action.routeName})
     }
 

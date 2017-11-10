@@ -11,6 +11,8 @@ import DetailContent from './DetailContent';
 import subscription from '../../../modules/subscription';
 const { width, height } = Dimensions.get('window');
 
+import Swipeable from 'react-native-swipeable';
+
 export default class MessageCard extends Component {
     constructor(props){
         super(props);
@@ -46,13 +48,25 @@ export default class MessageCard extends Component {
     render(){
         var MessageContent = this.state.expanded ? <DetailContent toggleItem={this.toggleItem.bind(this)} subInfo={this.state.subInfo} {...this.props} /> : <OverviewContent toggleItem={this.toggleItem.bind(this)} {...this.props} />;
         var cardWidth = width >= 600 ? width*0.85 : undefined;
+        var swipeDist = width >= 600 ? 250 : 125;
+        var rightButtons = [
+            (<View></View>)
+        ];
         return(
+            <Swipeable
+                rightButtons={rightButtons}
+                rightActionActivationDistance={swipeDist}
+                onSwipeStart={this.props.swipeStart}
+                onSwipeRelease={this.props.swipeRelease}
+                onRightActionComplete={()=>{this.props.removeMessage(this.props.messageData.msi_key, this.props.rowID)}}
+            >
             <View style={{flex: 1, alignSelf: cardWidth ? 'center' : 'stretch'}}>
                 <Card style={{margin: 8, padding: 10, borderRadius: 8, width: cardWidth}}>
                     <MessageHeader subInfo={this.state.subInfo} {...this.props}/>
                     {MessageContent}
                 </Card>
             </View>
+            </Swipeable>
         )
     }
 }

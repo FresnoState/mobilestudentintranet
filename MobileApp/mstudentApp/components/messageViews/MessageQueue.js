@@ -14,7 +14,8 @@ export default class MessageQueue extends Component {
         super(props);
         this.state = {
             expanded: false,
-            mode: 'overview'
+            mode: 'overview',
+            isSwiping: false
         }
     }
 
@@ -34,8 +35,18 @@ export default class MessageQueue extends Component {
                 messageData={rowData}
                 rowID={rowID}
                 removeMessage={this.props.removeMessage.bind(this)}
+                swipeStart={this.swipeStart.bind(this)}
+                swipeRelease={this.swipeRelease.bind(this)}
             />
         )
+    }
+
+    swipeStart(){
+        this.setState({isSwiping: true});
+    }
+
+    swipeRelease(){
+        this.setState({isSwiping: false});
     }
 
     render() {
@@ -57,6 +68,7 @@ export default class MessageQueue extends Component {
                 <ListView
                     ref={(view) => this.listView = view}
                     key={this.state.mode}
+                    scrollEnabled={!this.state.isSwiping}
                     dataSource={this.props.messageDS}
                     renderRow={this.renderRow.bind(this)}
                     onChangeVisibleRows={this.props.onVisibleRowChange}
