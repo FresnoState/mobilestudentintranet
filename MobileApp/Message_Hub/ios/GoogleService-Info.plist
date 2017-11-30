@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AD_UNIT_ID_FOR_BANNER_TEST</key>
+	<string>ca-app-pub-3940256099942544/2934735716</string>
+	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
+	<string>ca-app-pub-3940256099942544/4411468910</string>
+	<key>CLIENT_ID</key>
+	<string>919884321691-ld7pi83v0om1v27s7hn037do07741ncr.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.919884321691-ld7pi83v0om1v27s7hn037do07741ncr</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBMyMc3EckH2esOCizSGO7NoHwi2_x-aV8</string>
+	<key>GCM_SENDER_ID</key>
+	<string>919884321691</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>edu.fresnostate.innovate.message-hub</string>
+	<key>PROJECT_ID</key>
+	<string>mobile-student-intranet</string>
+	<key>STORAGE_BUCKET</key>
+	<string>mobile-student-intranet.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<true></true>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<false></false>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:919884321691:ios:622ffe22e029b0d5</string>
+	<key>DATABASE_URL</key>
+	<string>https://mobile-student-intranet.firebaseio.com</string>
+</dict>
+</plist>

@@ -49,9 +49,9 @@
 		397562D7DCA04292B73A3B1A /* Rubik-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E13C4544BDA547779BE418C9 /* Rubik-BoldItalic.ttf */; };
 		3993B3CF72B24D76B0289147 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5EBECDC9AB024830AC643308 /* Entypo.ttf */; };
 		46FC11A293B04438A9428CF5 /* Times New Roman.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5754BDFA477046AB8E785276 /* Times New Roman.ttf */; };
-		550DCCB91F91897A003E9DF1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 550DCCB81F91897A003E9DF1 /* GoogleService-Info.plist */; };
-		550DCCBA1F91897A003E9DF1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 550DCCB81F91897A003E9DF1 /* GoogleService-Info.plist */; };
 		5531B7AB1F72C23400B72CE5 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 5531B7AA1F72C23400B72CE5 /* main.jsbundle */; };
+		554758341FCDF9680068BAE5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 554758171FCDF9680068BAE5 /* GoogleService-Info.plist */; };
+		554758351FCDF9680068BAE5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 554758171FCDF9680068BAE5 /* GoogleService-Info.plist */; };
 		55517B3F1F06EF3100D87FFF /* FirebaseAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55517B391F06EF3100D87FFF /* FirebaseAnalytics.framework */; };
 		55517B401F06EF3100D87FFF /* FirebaseCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55517B3A1F06EF3100D87FFF /* FirebaseCore.framework */; };
 		55517B411F06EF3100D87FFF /* FirebaseCoreDiagnostics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55517B3B1F06EF3100D87FFF /* FirebaseCoreDiagnostics.framework */; };
@@ -354,8 +354,8 @@
 		4381D3FC9B204F3E9BFC582D /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		4BF57870A97D4075B4E36908 /* libRNVectorIcons.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNVectorIcons.a; sourceTree = "<group>"; };
 		4CBD45EE5F2148919C05D9B0 /* Andale Mono.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Andale Mono.ttf"; path = "../node_modules/native-base/Fonts/Andale Mono.ttf"; sourceTree = "<group>"; };
-		550DCCB81F91897A003E9DF1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5531B7AA1F72C23400B72CE5 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = main.jsbundle; path = ../main.jsbundle; sourceTree = "<group>"; };
+		554758171FCDF9680068BAE5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		55517B361F06EE4600D87FFF /* mstudentApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = mstudentApp.entitlements; path = mstudentApp/mstudentApp.entitlements; sourceTree = "<group>"; };
 		55517B391F06EF3100D87FFF /* FirebaseAnalytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FirebaseAnalytics.framework; sourceTree = "<group>"; };
 		55517B3A1F06EF3100D87FFF /* FirebaseCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FirebaseCore.framework; sourceTree = "<group>"; };
@@ -543,7 +543,7 @@
 		13B07FAE1A68108700A75B9A /* mstudentApp */ = {
 			isa = PBXGroup;
 			children = (
-				550DCCB81F91897A003E9DF1 /* GoogleService-Info.plist */,
+				554758171FCDF9680068BAE5 /* GoogleService-Info.plist */,
 				5531B7AA1F72C23400B72CE5 /* main.jsbundle */,
 				55517B361F06EE4600D87FFF /* mstudentApp.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
@@ -631,6 +631,16 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		558137041FAD229000FC66D3 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				C67170245D454686BA30509B /* libRNFIRMessaging.a */,
+				2EAECC1BE8F14B0BA461C82C /* libSQLite.a */,
+				4BF57870A97D4075B4E36908 /* libRNVectorIcons.a */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
 		55909FB21F26A0A100269CC5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -712,6 +722,7 @@
 				55517B3E1F06EF3100D87FFF /* GoogleToolboxForMac.framework */,
 				ACFD202719784208A8792541 /* Frameworks */,
 				46A3BA9BD8564F6B8E533A29 /* Resources */,
+				558137041FAD229000FC66D3 /* Recovered References */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -1135,7 +1146,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				550DCCBA1F91897A003E9DF1 /* GoogleService-Info.plist in Resources */,
+				554758351FCDF9680068BAE5 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1184,7 +1195,7 @@
 				5531B7AB1F72C23400B72CE5 /* main.jsbundle in Resources */,
 				578BDB3690AD4C559053BB81 /* FontAwesome.ttf in Resources */,
 				E9CAD48D108B45AAA43EC8F7 /* Foundation.ttf in Resources */,
-				550DCCB91F91897A003E9DF1 /* GoogleService-Info.plist in Resources */,
+				554758341FCDF9680068BAE5 /* GoogleService-Info.plist in Resources */,
 				55870C91F95B4861AEE81244 /* Ionicons.ttf in Resources */,
 				0A846692A5434CE4973BCAA3 /* MaterialCommunityIcons.ttf in Resources */,
 				1CAD621F1F924DADBE188D81 /* MaterialIcons.ttf in Resources */,
@@ -1393,6 +1404,7 @@
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 				);
 				INFOPLIST_FILE = mstudentApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1402,7 +1414,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "edu.fresnostate.innovate.msi-app";
 				PRODUCT_NAME = mstudentApp;
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1426,6 +1438,7 @@
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 				);
 				INFOPLIST_FILE = mstudentApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1435,7 +1448,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "edu.fresnostate.innovate.msi-app";
 				PRODUCT_NAME = mstudentApp;
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

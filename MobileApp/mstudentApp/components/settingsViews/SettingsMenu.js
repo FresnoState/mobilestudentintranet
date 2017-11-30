@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {
     Text,
     TouchableOpacity,
-    View
+    View,
 } from 'react-native';
 import styles from "../../styles";
 
