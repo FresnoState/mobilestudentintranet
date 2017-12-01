@@ -76,7 +76,7 @@ export default class MessageCard extends Component {
                 onRightActionComplete={this.confirmDelete.bind(this)}
             >
             <View style={{flex: 1, alignSelf: cardWidth ? 'center' : 'stretch'}}>
-                <Card style={{margin: 8, padding: 10, borderRadius: 8, width: cardWidth}}>
+                <Card style={{margin: 8, marginBottom: 10, padding: 10, borderRadius: 8, width: cardWidth,  shadowRadius: 5, elevation: 5}}>
                     <MessageHeader subInfo={this.state.subInfo} {...this.props}/>
                     {MessageContent}
                 </Card>

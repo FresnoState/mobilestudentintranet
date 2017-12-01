@@ -63,16 +63,18 @@ export default class MessageQueue extends Component {
                         </TouchableOpacity>
                     </View>
                 </View>
-                <FlatList
-                    key={this.state.mode}
-                    ref={(view) => this.listView = view}
-                    keyExtractor={this._keyExtractor}
-                    scrollEnabled={!this.state.isSwiping}
-                    data={this.props.messageData}
-                    extraData={this.props.lastUpdated}
-                    renderItem={this.renderItem.bind(this)}
-                    onViewableItemsChanged={this.viewChange}
-                />
+                <View style={{paddingLeft: 7, paddingRight: 7}}>
+                    <FlatList
+                        key={this.state.mode}
+                        ref={(view) => this.listView = view}
+                        keyExtractor={this._keyExtractor}
+                        scrollEnabled={!this.state.isSwiping}
+                        data={this.props.messageData}
+                        extraData={this.props.lastUpdated}
+                        renderItem={this.renderItem.bind(this)}
+                        onViewableItemsChanged={this.viewChange}
+                    />
+                </View>
             </View>
         );
     }

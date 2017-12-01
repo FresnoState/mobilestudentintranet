@@ -25,15 +25,8 @@ const font_size = {
 };
 
 export default styles = StyleSheet.create({
-    centered_container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF',
-        paddingTop: 20
-    },
     noncentered_container: {
-        backgroundColor: '#F5FCFF',
+        backgroundColor: '#FFF',
         flex: 1,
         padding: 5
     },
@@ -68,7 +61,7 @@ export default styles = StyleSheet.create({
         color: '#000000'
     },
     arrowText2: {
-        fontSize: 26,
+        fontSize: 34,
         fontWeight: '900',
         color: '#0076FF'
     },
