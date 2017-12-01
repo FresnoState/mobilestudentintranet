@@ -47,9 +47,6 @@ export default class Subscriptions extends Component {
             <View style={styles.noncentered_container}>
                 <View style={{marginTop: 30, alignItems: 'center', margin: 10}}>
                     <Text style={styles.headerText}>Subscriptions</Text>
-                    <Icon name={'md-checkbox'}/>
-                    <Icon style={{color: '#aeb2ac'}} name={'md-checkbox'}/>
-                    <Icon name={'md-square-outline'}/>
                 </View>
                 <ListView
                     style={{margin: 10}}

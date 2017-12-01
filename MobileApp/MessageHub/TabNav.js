@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {TabNavigator, TabBarBottom} from 'react-navigation';
 import Home from './components/Home.js';
 import SubsNav from './components/subsViews/SubsNav';
-//import SubscriptionView from './components/subscriptionViews/SubscriptionView';
+import SubscriptionView from './components/subscriptionViews/SubscriptionView';
 import ChannelView from './components/ChannelView';
 import Search from './components/Search';
 import SettingsNav from './components/settingsViews/SettingsNav';
@@ -16,11 +16,8 @@ const AppTabsNavigator = TabNavigator(
             screen: ChannelView
         },
         'Subscriptions' : {
-            screen: SubsNav
-        },
-        /*'Subscriptions' : {
             screen: SubscriptionView
-        },*/
+        },
         /*'Search' : {
             screen: Search
         },*/
