@@ -65,8 +65,8 @@ export default class MessageQueue extends Component {
                 </View>
                 <View style={{paddingLeft: 7, paddingRight: 7}}>
                     <FlatList
+                        style={{marginBottom: 50}}
                         key={this.state.mode}
-                        ref={(view) => this.listView = view}
                         keyExtractor={this._keyExtractor}
                         scrollEnabled={!this.state.isSwiping}
                         data={this.props.messageData}

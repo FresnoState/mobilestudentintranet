@@ -36,7 +36,7 @@ export default class MySubscriptions extends Component {
                     <Text style={[styles.headerText, {margin: 10}]}>My Subscriptions</Text>
                 </View>
                 <FlatList
-                    style={{padding: 10}}
+                    style={{paddingLeft: 10, paddingRight: 10}}
                     data={this.state.data}
                     renderItem={({item})=>(<SubjectRow subject={item}/>)}
                 />
