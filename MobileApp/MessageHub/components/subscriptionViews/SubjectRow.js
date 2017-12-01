@@ -15,18 +15,26 @@ export default class SubjectRow extends Component {
         this.state = {
             subscribed: this.props.subject.subscribed
         };
+        if(this.props.updateSub) { //check to see if this component has an Area Panel parent
+            this.extraPadding = width >= 600 ? {paddingLeft: 40} : {paddingLeft: 30};
+        }
+        else {
+            this.extraPadding = null;
+        }
     }
 
     sub(){
         subscription.subscribe(this.props.subject.topic_key);
         this.setState({subscribed: true});
-        this.props.updateSub(this.props.index, true);
+        if(this.props.updateSub)
+            this.props.updateSub(this.props.index, true);
     }
 
     unsub(){
         subscription.unsubscribe(this.props.subject.topic_key);
         this.setState({subscribed: false});
-        this.props.updateSub(this.props.index, false);
+        if(this.props.updateSub)
+            this.props.updateSub(this.props.index, false);
     }
 
     renderCheckBox(){
@@ -55,10 +63,9 @@ export default class SubjectRow extends Component {
     }
 
     render() {
-        var extraPadding = width >= 600 ? {paddingLeft: 40} : {paddingLeft: 30};
         return (
             <View style={{borderBottomWidth: 0.5}}>
-                <View style={[extraPadding, {padding: 10, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}]}>
+                <View style={[this.extraPadding, {padding: 10, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}]}>
                     <Text style={styles.subscriptionText}>{this.props.subject.name}</Text>
                     {this.renderCheckBox()}
                 </View>

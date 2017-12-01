@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {TabNavigator, TabBarBottom} from 'react-navigation';
 import Home from './components/Home.js';
-import SubsNav from './components/subsViews/SubsNav';
 import SubscriptionView from './components/subscriptionViews/SubscriptionView';
 import ChannelView from './components/ChannelView';
 import Search from './components/Search';

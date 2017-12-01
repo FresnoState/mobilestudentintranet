@@ -15,7 +15,7 @@ const { width, height } = Dimensions.get('window');
 
 export default class SubscriptionView extends Component {
     static navigationOptions = {
-        tabBarIcon: <Icon name='ios-checkmark' />
+        tabBarIcon: <Icon name='ios-checkbox'/>
     };
 
     constructor(props){

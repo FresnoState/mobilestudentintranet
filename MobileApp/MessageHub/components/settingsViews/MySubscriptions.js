@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
 import {
     Text,
-    ListView,
+    FlatList,
     View
 } from 'react-native';
-import OverviewList from '../subsViews/OverviewList';
 import subscription from '../../modules/subscription';
+import SubjectRow from '../subscriptionViews/SubjectRow';
 
 export default class MySubscriptions extends Component {
     constructor(props){
         super(props);
-        const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-        this.state = {dataSource: ds.cloneWithRows([])};
+        this.state = {data: []};
     }
 
     componentDidMount() {
@@ -24,7 +23,7 @@ export default class MySubscriptions extends Component {
             });
             subscription.getSubscribed((subscribed)=>{
                 subscription.mergeMySubData(subjects, subscribed, (mySubjects)=>{
-                    this.setState({dataSource: this.state.dataSource.cloneWithRows(mySubjects)});
+                    this.setState({data: mySubjects});
                 });
             });
         });
@@ -34,9 +33,13 @@ export default class MySubscriptions extends Component {
         return (
             <View style={styles.noncentered_container}>
                 <View style={{alignItems: 'center'}}>
-                    <Text style={styles.headerText}>My Subscriptions</Text>
+                    <Text style={[styles.headerText, {margin: 10}]}>My Subscriptions</Text>
                 </View>
-                <OverviewList subjectDS={this.state.dataSource}/>
+                <FlatList
+                    style={{padding: 10}}
+                    data={this.state.data}
+                    renderItem={({item})=>(<SubjectRow subject={item}/>)}
+                />
             </View>
         )
     }
