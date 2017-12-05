@@ -17,9 +17,9 @@ const AppTabsNavigator = TabNavigator(
         'Subscriptions' : {
             screen: SubscriptionView
         },
-        /*'Search' : {
+        'Search' : {
             screen: Search
-        },*/
+        },
         'Settings' : {
             screen: SettingsNav
         }
