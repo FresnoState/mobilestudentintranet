@@ -50,6 +50,11 @@ export default styles = StyleSheet.create({
         fontWeight: '600',
         color: '#6D6D72'
     },
+    subHeaderText3: {
+        fontSize: 22,
+        fontWeight: 'bold',
+        color: '#000000'
+    },
     headerText: {
         fontSize: 34,
         fontWeight: 'bold',
@@ -87,7 +92,7 @@ export default styles = StyleSheet.create({
         fontSize: 15,
         color: '#000000'
     },
-    subscriptionText: {
+    itemText: { //subscription items, search box test, search items
         fontSize: 17,
         color: '#000000'
     },

@@ -64,9 +64,9 @@ export default class SubjectRow extends Component {
 
     render() {
         return (
-            <View style={{borderBottomWidth: 0.5}}>
+            <View style={{borderBottomWidth: 0.5, borderColor: '#6D6D72'}}>
                 <View style={[this.extraPadding, {padding: 10, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}]}>
-                    <Text style={styles.subscriptionText}>{this.props.subject.name}</Text>
+                    <Text style={styles.itemText}>{this.props.subject.name}</Text>
                     {this.renderCheckBox()}
                 </View>
             </View>

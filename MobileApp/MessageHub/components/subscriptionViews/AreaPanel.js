@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {
-    StyleSheet,
     Text,
     View,
     TouchableOpacity,
@@ -15,8 +14,8 @@ export default class AreaPanel extends Component{
         super(props);
         this.state = {
             data: [],
-            expanded    : false,
-            animation   : new Animated.Value(),
+            expanded: false,
+            animation: new Animated.Value(),
             lastUpdated: new Date()
         };
     }
@@ -36,12 +35,10 @@ export default class AreaPanel extends Component{
     }
 
     toggle(){
-        let initialValue    = this.state.expanded? this.state.maxHeight + this.state.minHeight : this.state.minHeight,
-            finalValue      = this.state.expanded? this.state.minHeight : this.state.maxHeight + this.state.minHeight;
+        let initialValue = this.state.expanded? this.state.maxHeight + this.state.minHeight : this.state.minHeight,
+            finalValue = this.state.expanded? this.state.minHeight : this.state.maxHeight + this.state.minHeight;
 
-        this.setState({
-            expanded : !this.state.expanded
-        });
+        this.setState({expanded : !this.state.expanded});
 
         this.state.animation.setValue(initialValue);
         Animated.spring(
@@ -53,15 +50,11 @@ export default class AreaPanel extends Component{
     }
 
     _setMaxHeight(event){
-        this.setState({
-            maxHeight   : event.nativeEvent.layout.height
-        });
+        this.setState({maxHeight : event.nativeEvent.layout.height});
     }
 
     _setMinHeight(event){
-        this.setState({
-            minHeight   : event.nativeEvent.layout.height
-        });
+        this.setState({minHeight : event.nativeEvent.layout.height});
     }
 
     render(){
@@ -73,7 +66,7 @@ export default class AreaPanel extends Component{
                     style={{flexDirection: 'row', justifyContent: 'space-between', borderBottomWidth: 0.5, padding: 10, paddingTop: 15, paddingBottom: 15}}
                     onLayout={this._setMinHeight.bind(this)}
                 >
-                    <Text style={styles.subscriptionText}>{this.props.area.name}</Text>
+                    <Text style={styles.itemText}>{this.props.area.name}</Text>
                     <Text style={styles.countText}>{this.props.area.subjects.length}</Text>
                 </TouchableOpacity>
                 {
