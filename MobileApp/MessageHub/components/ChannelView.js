@@ -58,15 +58,17 @@ export default class ChannelView extends Component {
         this._initChannels();
         this.notificationListener = FCM.on(FCMEvent.Notification, async (notif) => {
                 if(notif.message) { //if data message
-                    this.addToChannels({
-                        "msi_key" : notif.msi_key,
-                        "topic_key" : notif.topic_key,
-                        "dist" : notif.dist,
-                        "title" : notif.title,
-                        "desc" : notif.desc,
-                        "message" : notif.message,
-                        "timestamp": Number(notif.timestamp)
-                    });
+                    if(this.state.data.length === 0 || notif.msi_key !== this.state.data[0].msi_key) { //if not duplicate
+                        this.addToChannels({
+                            "msi_key": notif.msi_key,
+                            "topic_key": notif.topic_key,
+                            "dist": notif.dist,
+                            "title": notif.title,
+                            "desc": notif.desc,
+                            "message": notif.message,
+                            "timestamp": Number(notif.timestamp)
+                        });
+                    }
                 }
 
                 //closing iOS notification, required for being able to properly continuing receiving notifications

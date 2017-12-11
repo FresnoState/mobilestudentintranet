@@ -4,8 +4,6 @@ import {Platform} from 'react-native';
 
 function listen(){
     this.notificationListener = FCM.on(FCMEvent.Notification, async (notif) => {
-            //debugging
-            console.log(notif);
 
             //receive & process message
             if(Platform.OS==='android' && notif.fcm.body && !notif.local_notification){
@@ -18,11 +16,11 @@ function listen(){
                 alert(notif.fcm.body);
             }
             if(notif.message) { //if data message
-                //message.exists(notif.msi_key, (exists)=>{ //if not duplicate
-                //if(!exists){
-                message.addMessage(notif.msi_key, notif.topic_key, notif.dist, notif.title, notif.desc, notif.message, Number(notif.timestamp));
-                //}
-                //});
+                message.exists(notif.msi_key, (duplicate)=>{ //if not duplicate
+                    if(!duplicate){
+                        message.addMessage(notif.msi_key, notif.topic_key, notif.dist, notif.title, notif.desc, notif.message, Number(notif.timestamp));
+                    }
+                });
             }
 
             //closing iOS notification, required for being able to properly continuing receiving notifications
