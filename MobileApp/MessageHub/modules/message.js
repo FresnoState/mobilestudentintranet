@@ -13,7 +13,7 @@ module.exports = {
           callback(messages);
       })
   },
-  exists: function(msi_key, callback){
+  exists: function(msi_key, callback){ //returns bool value for whether message already exists in DB
     db.executeSql('SELECT EXISTS (SELECT * FROM Message WHERE Message.msi_key = (?))', [msi_key], function(result){
         callback(Object.values(result.rows.item(0))[0])
     })
@@ -21,7 +21,7 @@ module.exports = {
   removeMessage: function(msi_key){
     db.executeSql('DELETE FROM Message WHERE msi_key = (?);',[msi_key]);
   },
-  clearOldMessages: function(){ //remove messages that are older than a week from today's midnight tonight
+  clearOldMessages: function(){ //remove messages that are older than a week ago from today's midnight tonight
     var timestamp = new Date();
     //set ts to midnight at end of current day
     timestamp.setHours(24,0,0,0);
