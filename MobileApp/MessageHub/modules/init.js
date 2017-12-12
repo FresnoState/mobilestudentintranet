@@ -2,6 +2,7 @@ import {Platform, AsyncStorage} from 'react-native';
 import FCM from 'react-native-fcm';
 import subscription from './subscription';
 
+//subscribes to all required/forced and recommend subjects
 function initSubs(){
     subscription.get_iCube((icube)=>{
         for(var i=0; i<icube.length; ++i){
@@ -17,6 +18,7 @@ function initSubs(){
     })
 }
 
+//requests permissions if iOS, calls the subscription initialization, and sets the app initialized flag
 function init(){
     if(Platform.OS === 'ios') {
         FCM.requestPermissions()

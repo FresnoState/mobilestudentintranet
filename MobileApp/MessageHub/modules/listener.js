@@ -2,10 +2,12 @@ import FCM, {FCMEvent, RemoteNotificationResult, WillPresentNotificationResult, 
 import message from "./message.js";
 import {Platform} from 'react-native';
 
+//sets up background listener to process notifications and store data/information messages
 function listen(){
     this.notificationListener = FCM.on(FCMEvent.Notification, async (notif) => {
-
             //receive & process message
+
+            //show alert if alert type message received on Android in lieu of heads-up display
             if(Platform.OS==='android' && notif.fcm.body && !notif.local_notification){
                 FCM.presentLocalNotification({
                     id: notif["google.message_id"],
@@ -15,7 +17,7 @@ function listen(){
                 });
                 alert(notif.fcm.body);
             }
-            if(notif.message) { //if data message
+            if(notif.message) { //if data/information message
                 message.exists(notif.msi_key, (duplicate)=>{ //if not duplicate
                     if(!duplicate){
                         message.addMessage(notif.msi_key, notif.topic_key, notif.dist, notif.title, notif.desc, notif.message, Number(notif.timestamp));

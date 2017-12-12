@@ -6,7 +6,7 @@ var icube = [];
 var loaded = false;
 
 module.exports = {
-    //gets subscription data
+    //gets subscription data icube either from REST endpoint or cache
     get_iCube: function(callback) {
         if(!loaded) {
             //process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
@@ -16,7 +16,7 @@ module.exports = {
             fetch(url)
             .then(function (response) {
                 return response.json();
-            }).then(function (json) {
+            }).then(function (json) { //save icube to cache
                 loaded = true;
                 icube = json.icube;
                 callback(icube);
@@ -127,11 +127,13 @@ module.exports = {
           }
       });
     },
+    //subscribes device to subject (FCM topic) that corresponds with topic_key parameter
     subscribe: function(topic_key){
         FCM.subscribeToTopic('/topics/'+topic_key);
     },
+    //unsubscribes device from subject (FCM topic) that corresponds with topic_key parameter
     unsubscribe: function(topic_key){
-        //add check here for safeguarding against removing required/forced topics
+        //add check here for safeguarding against removing required/forced topics?
         FCM.unsubscribeFromTopic('/topics/'+topic_key);
     }
 };
