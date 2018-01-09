@@ -43,6 +43,7 @@ export default class TabNav extends Component {
 
     state = {prevScreen: null, currentScreen: null};
 
+    //keep track of the current screen upon navigation changes
     _onNavigationStateChange(prevState, newState, action) {
         this.setState({currentScreen: action.routeName})
     }
@@ -52,12 +53,12 @@ export default class TabNav extends Component {
         super(props);
     }
 
+    //renders the tab navigator with the current screen passed as a prop
     render() {
         return (
             <AppTabsNavigator
                 onNavigationStateChange={this._onNavigationStateChange.bind(this)}
                 screenProps={
-                    /*this.props.screenProps*/
                     {currentScreen: this.state.currentScreen}
                 }
             />
