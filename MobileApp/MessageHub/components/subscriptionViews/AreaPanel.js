@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import SubjectRow from './SubjectRow';
 import subscription from '../../modules/subscription';
+import fcm from "../../modules/fcm";
 
 export default class AreaPanel extends Component{
     constructor(props){
@@ -21,7 +22,7 @@ export default class AreaPanel extends Component{
     }
 
     componentWillReceiveProps(){
-        subscription.getSubscribed((subscribed)=>{
+        fcm.getSubscribed((subscribed)=>{
             subscription.mergeSubData(this.props.area.subjects, subscribed, (subjects)=>{
                 this.setState({expanded: false, data: subjects});
             })

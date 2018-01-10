@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import {
     Text,
-    View,
-    Platform
+    View
 } from 'react-native';
 import {Icon} from 'native-base';
 import moment from 'moment';
-import FCM, {FCMEvent, RemoteNotificationResult, WillPresentNotificationResult, NotificationType} from 'react-native-fcm';
-import message from '../modules/message.js';
+import message from '../modules/message';
+import fcm from '../modules/fcm';
 import MessageQueue from './messageViews/MessageQueue';
 
 export default class Home extends Component {
@@ -31,37 +30,19 @@ export default class Home extends Component {
             this.setState({data: messages});
         });
 
-        this.notificationListener = FCM.on(FCMEvent.Notification, async (notif) => {
-                if(notif.message) { //if data message
-                    if(this.state.data.length === 0 || notif.msi_key !== this.state.data[0].msi_key){ //if not duplicate
-                       this.addToQueue({
-                           "msi_key" : notif.msi_key,
-                           "topic_key" : notif.topic_key,
-                           "dist" : notif.dist,
-                           "title" : notif.title,
-                           "desc" : notif.desc,
-                           "message" : notif.message,
-                           "timestamp": Number(notif.timestamp)
-                       });
-                    }
-                }
-
-                //closing iOS notification, required for being able to properly continuing receiving notifications
-                if (Platform.OS === 'ios') {
-                    switch (notif._notificationType) {
-                        case NotificationType.Remote:
-                            notif.finish(RemoteNotificationResult.NewData);
-                            break;
-                        case NotificationType.NotificationResponse:
-                            notif.finish();
-                            break;
-                        case NotificationType.WillPresent:
-                            notif.finish(WillPresentNotificationResult.All);
-                            break;
-                    }
-                }
+        fcm.listen(null, (notif)=>{
+            if(this.state.data.length === 0 || notif.msi_key !== this.state.data[0].msi_key){ //if not duplicate
+                this.addToQueue({
+                    "msi_key" : notif.msi_key,
+                    "topic_key" : notif.topic_key,
+                    "dist" : notif.dist,
+                    "title" : notif.title,
+                    "desc" : notif.desc,
+                    "message" : notif.message,
+                    "timestamp": Number(notif.timestamp)
+                });
             }
-        );
+        });
     }
 
     componentDidUpdate(){

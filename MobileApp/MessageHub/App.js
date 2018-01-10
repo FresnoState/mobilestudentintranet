@@ -9,8 +9,7 @@ import listener from './modules/listener';
 import message from './modules/message';
 import subscriptions from './modules/subscription';
 
-console.disableYellowBox = true;
-
+listener();
 
 const AppNavigator = StackNavigator(
     {

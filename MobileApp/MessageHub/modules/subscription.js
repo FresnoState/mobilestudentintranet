@@ -1,7 +1,5 @@
-import {Platform} from 'react-native';
-import FCM from 'react-native-fcm';
+import fcm from "./fcm";
 
-const API_KEY = 'AAAA1i1g05s:APA91bEm3cI3lCflqY74PSH3O-3RGUk4H9kGqXKB1NfhT9igNntvDSSqWDBxajEK-rsbFovPVJzTJojx4Q-SlgFs-7D2fT2dmdw_0ii_5jodpn__jahPlKE1UL-HibRkSO8_6WL88B3D';
 var icube = [];
 var loaded = false;
 
@@ -16,11 +14,13 @@ module.exports = {
             fetch(url)
             .then(function (response) {
                 return response.json();
-            }).then(function (json) { //save icube to cache
+            })
+            .then(function (json) { //save icube to cache
                 loaded = true;
                 icube = json.icube;
                 callback(icube);
-            }).catch(function (err) {
+            })
+            .catch(function (err) {
                 console.log("GET TOPICS ERR", err);
             });
         }
@@ -28,29 +28,6 @@ module.exports = {
             callback(icube);
         }
 
-    },
-    //gets array of topic keys of currently subscribed subjects
-    getSubscribed: function(callback){
-        FCM.getFCMToken().then((token) => {
-            fetch('https://iid.googleapis.com/iid/info/'+token+'?details=true', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'key='+API_KEY
-                }
-            }).then(function(response) {
-                return response.json();
-            }).then(function(subscribed) {
-                if(subscribed.rel && subscribed.rel.topics){
-                    callback(Object.keys(subscribed.rel.topics));
-                }
-                else{
-                    callback([]);
-                }
-            }).catch(function(err){
-                console.log("GET SUBS ERR", err);
-            });
-        });
     },
     //updates subject data to have a boolean field for whether a subject is currently subscribed to
     mergeSubData: function(subjects, subscribed, callback){
@@ -72,7 +49,7 @@ module.exports = {
     },
     //returns boolean in cb for whether a subject is currently subscribed to
     checkIfSubscribed(topic_key, callback){
-      this.getSubscribed((subjects)=>{
+      fcm.getSubscribed((subjects)=>{
           var subscribed = false;
           for(var i=0; i<subjects.length; ++i){
               if(subjects[i].indexOf(topic_key) >=0){
@@ -126,14 +103,5 @@ module.exports = {
               callback(subInfo);
           }
       });
-    },
-    //subscribes device to subject (FCM topic) that corresponds with topic_key parameter
-    subscribe: function(topic_key){
-        FCM.subscribeToTopic('/topics/'+topic_key);
-    },
-    //unsubscribes device from subject (FCM topic) that corresponds with topic_key parameter
-    unsubscribe: function(topic_key){
-        //add check here for safeguarding against removing required/forced topics?
-        FCM.unsubscribeFromTopic('/topics/'+topic_key);
     }
 };

@@ -5,6 +5,7 @@ import {
     View
 } from 'react-native';
 import subscription from '../../modules/subscription';
+import fcm from '../../modules/fcm';
 import SubjectRow from '../subscriptionViews/SubjectRow';
 
 export default class MySubscriptions extends Component {
@@ -21,7 +22,7 @@ export default class MySubscriptions extends Component {
                     subjects = subjects.concat(area.subjects);
                 });
             });
-            subscription.getSubscribed((subscribed)=>{
+            fcm.getSubscribed((subscribed)=>{
                 subscription.mergeMySubData(subjects, subscribed, (mySubjects)=>{
                     this.setState({data: mySubjects});
                 });

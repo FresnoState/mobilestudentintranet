@@ -6,7 +6,7 @@ import {
     Dimensions
 } from 'react-native';
 import {Icon} from 'native-base';
-import subscription from '../../modules/subscription';
+import fcm from '../../modules/fcm';
 const { width, height } = Dimensions.get('window');
 
 export default class SubjectRow extends Component {
@@ -24,14 +24,14 @@ export default class SubjectRow extends Component {
     }
 
     sub(){
-        subscription.subscribe(this.props.subject.topic_key);
+        fcm.subscribe(this.props.subject.topic_key);
         this.setState({subscribed: true});
         if(this.props.updateSub)
             this.props.updateSub(this.props.index, true);
     }
 
     unsub(){
-        subscription.unsubscribe(this.props.subject.topic_key);
+        fcm.unsubscribe(this.props.subject.topic_key);
         this.setState({subscribed: false});
         if(this.props.updateSub)
             this.props.updateSub(this.props.index, false);

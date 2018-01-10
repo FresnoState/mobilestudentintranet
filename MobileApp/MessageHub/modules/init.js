@@ -1,6 +1,7 @@
 import {Platform, AsyncStorage} from 'react-native';
 import FCM from 'react-native-fcm';
 import subscription from './subscription';
+import fcm from './fcm';
 
 //subscribes to all required/forced and recommend subjects
 function initSubs(){
@@ -10,7 +11,7 @@ function initSubs(){
                 for(var k=0; k<icube[i].areas[j].subjects.length; ++k){
                     var sub = icube[i].areas[j].subjects[k];
                     if(sub.opt.level === 'Forced' || sub.opt.level === 'Recommended'){
-                        subscription.subscribe(sub.topic_key);
+                        fcm.subscribe(sub.topic_key);
                     }
                 }
             }
