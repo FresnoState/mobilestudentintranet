@@ -7,10 +7,8 @@ module.exports = {
     //gets subscription data icube either from REST endpoint or cache
     get_iCube: function(callback) {
         if(!loaded) {
-            //process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
-            //var url = Platform.OS === 'ios' ? 'https://mobile-api.innovate.fresnostate.edu/icube' : 'http://mobile-api.innovate.fresnostate.edu/icube';
-            //var url = 'https://mobile-api.innovate.fresnostate.edu/icube';
-            var url = 'http://mobile-api.innovate.fresnostate.edu/icube';
+            //var url = 'https://mobile-api.innovate.fresnostate.edu/channel';
+            var url = 'http://mobile-api.innovate.fresnostate.edu/channel';
             fetch(url)
             .then(function (response) {
                 return response.json();
