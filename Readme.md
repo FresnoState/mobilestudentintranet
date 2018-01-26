@@ -39,6 +39,7 @@ Message Hub System with subscription based message publishing consisting of a we
 ## Development
 
 ### Technologies Used
+
 * Firebase Cloud Messaging
 * React Native
 * NodeJS
@@ -46,5 +47,7 @@ Message Hub System with subscription based message publishing consisting of a we
 * MongoDB
 
 ### Architecture
+
+![](images/Architecture.png)
 
 ### Software and System Design
