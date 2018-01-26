@@ -1,4 +1,5 @@
 # Mobile Student Intranet Project
+
 Message Hub System with subscription based message publishing consisting of a web portal and mobile app.
 
 ## Team
@@ -51,3 +52,5 @@ Message Hub System with subscription based message publishing consisting of a we
 ![](images/Architecture.png)
 
 ### Software and System Design
+
+Information regarding the software and system design can be found in the documentation file:
