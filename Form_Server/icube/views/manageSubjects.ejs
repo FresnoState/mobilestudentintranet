@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>MSI Manage Subjects</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+</head>
+<body>
+  <div class="container">
+    <!-- header -->
+    <div class="page-header row" style="justify-content: space-between; margin: 10px; margin-top: 20px;">
+      <h3>Admin: Manage Subjects</h3>
+      <p><%= user %></p>
+      <a href="/logout"><button>Logout</button></a>
+    </div>
+    <!-- -->
+      <div class="form-group">
+        <select id="Channel" class="form-control" name="channel" required>
+          <option>Channel</option>
+          <% for(var i=0; i<icube.length; i++) {%>
+            <option value="<%= i %>"><%= icube[i].name %></option>
+          <% } %>
+        </select>
+      </div>
+      <div class="form-group">
+        <select id="Area" class="form-control" name="area" required>
+          <option>Area</option>
+        </select>
+      </div>
+      <div id="accordion" role="tablist" aria-multiselectable="true">
+      </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+  <script>
+  var icube = <%- JSON.stringify(icube) %>
+    var c_index;
+    var a_index;
+    $("#Channel").change(function () {
+        $("#Area").children('option:not(:first)').remove();
+        c_index = document.getElementById('Channel').value;
+        if($.isNumeric(c_index)){
+          for(var i=0; i<icube[c_index].areas.length; i++){
+            $("#Area").append(
+              $('<option>', {
+                value: i, text: icube[c_index].areas[i].name
+              })
+            );
+          }
+        }
+      })
+    $("#Area").change(function () {
+        a_index = document.getElementById('Area').value;
+        $("#accordion").children().remove();
+        if($.isNumeric(c_index) && $.isNumeric(a_index)){
+          for(var i=0; i<icube[c_index].areas[a_index].subjects.length; i++){
+            $("#accordion").append(
+              `
+              <form method="POST">
+                  <input type="hidden" name="channelID" value="${icube[c_index]._id}">
+                  <input type="hidden" name="areaID" value="${icube[c_index].areas[a_index].id}">
+                  <input type="hidden" name="subjectID" value="${icube[c_index].areas[a_index].subjects[i].id}">
+                  <div class="card">
+                    <div class="card-header" role="tab" id="heading${i}">
+                      <h5 class="mb-0">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse${i}" aria-expanded="false" aria-controls="collapse${i}">
+                          ${icube[c_index].areas[a_index].subjects[i].name}
+                        </a>
+                      </h5>
+                    </div>
+                    <div id="collapse${i}" class="collapse" role="tabpanel" aria-labelledby="heading${i}">
+                      <div class="card-block">
+                        <div class="row">
+                          <div class="form-group col-xs">
+                            <input type="text" class="form-control" name="name" value="${icube[c_index].areas[a_index].subjects[i].name}">
+                          </div>
+                          <div class="form-group col-md">
+                            <textarea class="form-control" name="desc">${icube[c_index].areas[a_index].subjects[i].desc}</textarea>
+                          </div>
+                          <div class="form-group col-xs" style="margin: 10px;">
+                            <h5>Subscription Level</h5>
+                            <div class="form-check">
+                              <label class="form-check-label"><input type="radio" style="margin-right: 10px" name="level" value="" ${icube[c_index].areas[a_index].subjects[i].opt.level == "" ? "checked" : null}>Default</label>
+                            </div>
+                            <div class="form-check">
+                              <label class="form-check-label"><input type="radio" style="margin-right: 10px" name="level" value="Recommended" ${icube[c_index].areas[a_index].subjects[i].opt.level === "Recommended" ? "checked" : null}>Recommended</label>
+                            </div>
+                            <div class="form-check">
+                              <label class="form-check-label"><input type="radio" style="margin-right: 10px" name="level" value="Forced" ${icube[c_index].areas[a_index].subjects[i].opt.level === "Forced" ? "checked" : null}>Forced</label>
+                            </div>
+                          </div>
+                          <div class="form-group col-xs" style="margin: 10px;">
+                            <h5>Distribution Type</h5>
+                            <div class="form-check">
+                              <label class="form-check-label"><input type="radio" style="margin-right: 10px" name="dist" value="Information" ${icube[c_index].areas[a_index].subjects[i].opt.distribution === "Information" ? "checked" : null}>Information</label>
+                            </div>
+                            <div class="form-check">
+                              <label class="form-check-label"><input type="radio" style="margin-right: 10px" name="dist" value="Alert" ${icube[c_index].areas[a_index].subjects[i].opt.distribution === "Alert" ? "checked" : null}>Alert</label>
+                            </div>
+                          </div>
+                          <div class="col-xs">
+                            <div class="form-group" style="margin: 10px;">
+                              <button type="submit" formaction="/subscription/update_subject" name="action" value="Update" class="btn btn-primary">Update</button>
+                            </div>
+                            <div class="form-group" style="margin: 10px;">
+                              <button type="submit" formaction="/subscription/delete_subject" name="action" value="Delete" class="btn btn-danger">Delete</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              `
+            )
+          }
+        }
+      }) 
+
+  </script>
+</body>
+</html>

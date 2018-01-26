@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Max's Member Example</title>
+</head>
+<body>
+  <ul class="members">
+  <% for(var i=0; i<members.length; i++) {%>
+    <li class="member">
+      <span><%= members[i].firstname %></span>
+      <span><%= members[i].lastname %></span>
+    </li>
+  <% } %>
+  </ul>
+
+  <form action="/examples/members" method="POST">
+    <input type="text" placeholder="firstname" name="firstname">
+    <input type="text" placeholder="lastname" name="lastname">
+    <button type="submit">Submit</button>
+  </form>
+  
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>MSI Manage Areas</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+</head>
+<body>
+  <div class="container">
+    <!-- header -->
+    <div class="page-header row" style="justify-content: space-between; margin: 10px; margin-top: 20px;">
+      <h3>Admin: Manage Areas</h3>
+      <p><%= user %></p>
+      <a href="/logout"><button>Logout</button></a>
+    </div>
+    <!-- -->
+    <div class="form-group ">
+      <select id="Channel" class="form-control" required>
+        <option>Channel</option>
+        <% for(var i=0; i<icube.length; i++) {%>
+          <option value="<%= i %>"><%= icube[i].name %></option>
+        <% } %>
+      </select>
+    </div>
+    <div id="accordion" role="tablist" aria-multiselectable="true">
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+  <script>
+    var icube = <%- JSON.stringify(icube) %>
+    $("#Channel").change(function () {
+        var c_index = document.getElementById('Channel').value;
+        $("#accordion").children().remove();
+        if($.isNumeric(c_index)){
+          for(var i=0; i<icube[c_index].areas.length; i++){
+            $("#accordion").append(
+              `
+              <form method="POST">
+                  <input type="hidden" name="channelID" value="${icube[c_index]._id}">
+                  <input type="hidden" name="areaID" value="${icube[c_index].areas[i].id}">
+                  <div class="card">
+                    <div class="card-header" role="tab" id="heading${i}">
+                      <h5 class="mb-0">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse${i}" aria-expanded="false" aria-controls="collapse${i}">
+                          ${icube[c_index].areas[i].name}
+                        </a>
+                      </h5>
+                    </div>
+                    <div id="collapse${i}" class="collapse" role="tabpanel" aria-labelledby="heading${i}">
+                      <div class="card-block">
+                        <div class="row">
+                          <div class="form-group col-xs">
+                            <input type="text" class="form-control" name="name" value="${icube[c_index].areas[i].name}">
+                          </div>
+                          <div class="form-group col-sm">
+                            <textarea class="form-control" name="desc">${icube[c_index].areas[i].desc}</textarea>
+                          </div>
+                          <div class="col-xs">
+                            <div class="form-group" style="margin: 10px;">
+                              <button type="submit" formaction="/subscription/update_area" name="action" value="Update" class="btn btn-primary">Update</button>
+                            </div>
+                            <div class="form-group" style="margin: 10px;">
+                              <button type="submit" formaction="/subscription/delete_area" name="action" value="Delete" class="btn btn-danger">Delete</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              `
+            );
+          }
+        }
+      })
+  </script>
+</body>
+</html>

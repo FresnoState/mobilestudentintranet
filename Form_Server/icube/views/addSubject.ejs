@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>MSI Add Subject</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+</head>
+<body>
+  <div class="container">
+    <!-- header -->
+    <div class="page-header row" style="justify-content: space-between; margin: 10px; margin-top: 20px;">
+      <h3>Admin: Add Subject</h3>
+      <p><%= user %></p>
+      <a href="/logout"><button>Logout</button></a>
+    </div>
+    <!-- -->
+    <div class="form-group">
+      <select id="Channel" class="form-control" name="channel" required>
+        <option>Channel</option>
+        <% for(var i=0; i<icube.length; i++) {%>
+          <option value="<%= i %>"><%= icube[i].name %></option>
+        <% } %>
+      </select>
+    </div>
+    <div class="form-group">
+      <select id="Area" class="form-control" name="area" required>
+        <option>Area</option>
+      </select>
+    </div>
+    <form method="POST" action="/subscription/add_subject">
+      <div class="form-group">
+        <input type="text" class="form-control" name="name" placeholder="Subject Name" required>
+      </div>
+      <div class="form-group">
+        <textarea class="form-control" name="desc" placeholder="Subject Description" required></textarea>
+      </div>
+      <div class="form-group">
+        <legend>Subscription Level</legend>
+        <div class="form-check">
+          <label class="form-check-label"><input type="radio" class="form-check-input" style="margin-right: 10px" name="level" value="" checked required>Default (added by user)</label>
+        </div>
+        <div class="form-check">
+          <label class="form-check-label"><input type="radio" class="form-check-input" style="margin-right: 10px" name="level" value="Recommended" required>Recommended</label>
+        </div>
+        <div class="form-check">
+          <label class="form-check-label"><input type="radio" class="form-check-input" style="margin-right: 10px" name="level" value="Forced" required>Forced</label>
+        </div>
+      </div>
+      <div class="form-group">
+        <legend>Distribution Type</legend>
+        <div class="form-check">
+          <label class="form-check-label"><input type="radio" class="form-check-input" style="margin-right: 10px" name="dist" value="Information" checked required>Information</label>
+        </div>
+        <div class="form-check">
+          <label class="form-check-label"><input type="radio" class="form-check-input" style="margin-right: 10px" name="dist" value="Alert" required>Alert</label>
+        </div>
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary">Add Subject</button>
+      </div>
+    </form>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+  <script>
+  var icube = <%- JSON.stringify(icube) %>
+    var c_index;
+    var a_index;
+    $("#Channel").change(function () {
+        $("#Area").children('option:not(:first)').remove();
+        c_index = document.getElementById('Channel').value;
+        console.log(c_index);
+        if($.isNumeric(c_index)){
+          for(var i=0; i<icube[c_index].areas.length; i++){
+            $("#Area").append(
+              $('<option>', {
+                value: i, text: icube[c_index].areas[i].name
+              })
+            );
+          }
+        }
+      })
+    $("#Area").change(function () {
+        a_index = document.getElementById('Area').value;
+      }) 
+    $("form").submit(function() {
+      $("form").append("<input type='hidden' name='channelID' value='"+icube[c_index]._id+"' />");
+      $("form").append("<input type='hidden' name='areaID' value='"+icube[c_index].areas[a_index].id+"' />");
+    })
+
+  </script>
+</body>
+</html>
