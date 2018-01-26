@@ -1,5 +1,5 @@
 # Mobile Student Intranet Project
-Message Hub System with subscription based message publishing consisting of a web portal and mobile app. Technologies used include React Native, NodeJS, Express, Bootstrap, and MongoDB.
+Message Hub System with subscription based message publishing consisting of a web portal and mobile app.
 
 ## Team
 * Max Tsai
