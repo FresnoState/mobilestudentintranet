@@ -1,6 +1,6 @@
 # Mobile Student Intranet Project
 
-Message Hub System with subscription based message publishing consisting of a web portal and mobile app. Subscriptions are in an information cube hiearchy format, which is stored in a NoSQL database and managed in the web portal. Messages are relayed to subscriptions through the web portal via FCM to the mobile app. The mobile app allows indidivuals to view messages and manage their subscriptions.
+Message Hub System with subscription based message publishing consisting of a web portal and mobile app. Subscriptions are in an information cube hiearchy format, which is stored in a NoSQL database and managed in the web portal. Messages are relayed to subscriptions through the web portal via FCM to the mobile app. The mobile app receives messages and stores them in a local datase. The app allows indidivuals to view their messages and manage their subscriptions.
 
 ## Team
 * Max Tsai
