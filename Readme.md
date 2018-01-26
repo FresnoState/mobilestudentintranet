@@ -1,4 +1,4 @@
-#Mobile Student Intranet Project
+# Mobile Student Intranet Project
 
 ## Mobile App
 
@@ -17,6 +17,11 @@
 ## Development
 
 ### Technologies Used
+* Firebase Cloud Messaging
+* React Native
+* NodeJS
+* ExpressJS
+* MongoDB
 
 ### Architecture
 
