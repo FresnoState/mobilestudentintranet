@@ -56,4 +56,4 @@ Message Hub System with subscription based message publishing consisting of a we
 
 ### Software and System Design
 
-Information regarding the software and system design can be found in the [design documentation](documentation/System_Design_Document.pdf).
+Information regarding the software and system design can be found in the [design documentation](Documentation/System_Design_Document.pdf).
