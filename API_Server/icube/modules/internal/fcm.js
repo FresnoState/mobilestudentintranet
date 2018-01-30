@@ -1,7 +1,6 @@
 const fetch = require('node-fetch');
 
-//will store in external file later
-const api_key = 'AAAA1i1g05s:APA91bEm3cI3lCflqY74PSH3O-3RGUk4H9kGqXKB1NfhT9igNntvDSSqWDBxajEK-rsbFovPVJzTJojx4Q-SlgFs-7D2fT2dmdw_0ii_5jodpn__jahPlKE1UL-HibRkSO8_6WL88B3D';
+const api_key = 'api-key';
 
 function relayMessage(message){
   fetch("https://fcm.googleapis.com/fcm/send", {
