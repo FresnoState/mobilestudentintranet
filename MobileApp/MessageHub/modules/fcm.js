@@ -3,7 +3,7 @@
 import FCM, {FCMEvent, RemoteNotificationResult, WillPresentNotificationResult, NotificationType} from 'react-native-fcm';
 import {Platform} from "react-native";
 
-const API_KEY = 'AAAA1i1g05s:APA91bEm3cI3lCflqY74PSH3O-3RGUk4H9kGqXKB1NfhT9igNntvDSSqWDBxajEK-rsbFovPVJzTJojx4Q-SlgFs-7D2fT2dmdw_0ii_5jodpn__jahPlKE1UL-HibRkSO8_6WL88B3D';
+const API_KEY = 'api-key';
 
 module.exports = {
     listen: function(alertCallback, infoCallback){
